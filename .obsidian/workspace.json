@@ -1,0 +1,231 @@
+{
+  "main": {
+    "id": "b1c1c62459044127",
+    "type": "split",
+    "children": [
+      {
+        "id": "fba5f388057dc5bf",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2be639e493cb0db8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Phân tích yêu cầu/Phân tích yêu cầu.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "ee846abcc1d6fe4a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Phân tích yêu cầu/Phân tích yêu cầu.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      },
+      {
+        "id": "53a615c68b8909e3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "83a095fa812bbf85",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Phân tích yêu cầu/Phân tích yêu cầu (Clone).md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "4398974188b7e71d",
+    "type": "split",
+    "children": [
+      {
+        "id": "93d4203c79a8369a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "641d6e06ae30e689",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "4e81ecae61e9ca66",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": true,
+                "explainSearch": false,
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "024dd44b76415524",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 310.5
+  },
+  "right": {
+    "id": "04bc5fc1716cb275",
+    "type": "split",
+    "children": [
+      {
+        "id": "5a519b2c442d29b7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7c6dc3f1e7302b2a",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Phân tích yêu cầu/Phân tích yêu cầu.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "31f8bbf94d296d45",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Phân tích yêu cầu/Phân tích yêu cầu.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "3cb171dabc9cbf3f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "39e6d530eb53c2c3",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Phân tích yêu cầu/Phân tích yêu cầu.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "ee846abcc1d6fe4a",
+  "lastOpenFiles": [
+    "Phân tích yêu cầu/Phân tích yêu cầu (Clone).md",
+    "Phân tích yêu cầu/Phân tích yêu cầu.md",
+    "Diagram/Database.md",
+    "Database.png",
+    "Database.png.crdownload",
+    "out/Diagram/Activity/Database/Thiết kế database.txt",
+    "out/Diagram/Activity/Database",
+    "Phân tích yêu cầu.pdf",
+    "out/Diagram/Activity/Thống kê các lần nộp bài/Thống kê các lần nộp bài.png",
+    "out/Diagram/Activity/Thống kê các lần nộp bài",
+    "Diagram/Activity/Thống kê các lần nộp bài.plantuml",
+    "out/Diagram/Activity/Thống kê bài tập/Thống kê bài tập.png",
+    "out/Diagram/Activity/Thống kê bài tập",
+    "Diagram/Activity/Thống kê bài tập.plantuml",
+    "out/Diagram/Activity/Kiểm thử testcase/Kiểm thử testcase.png",
+    "out/Diagram/Activity/Kiểm thử testcase",
+    "Diagram/Activity/Kiểm thử testcase.plantuml",
+    "out/Diagram/Activity/Chấm bài thi/Chấm bài thi.png",
+    "out/Diagram/Activity/Chỉnh sửa testcase/Chỉnh sửa testcase.png",
+    "out/Diagram/Activity/Chỉnh sửa đề thi/Chỉnh sửa đề thi.png",
+    "out/Diagram/Activity/Danh sách bài làm/Danh sách bài làm.png",
+    "out/Diagram/Activity/Làm bài thi/Làm bài thi.png",
+    "out/Diagram/Activity/Thêm đề thi/Thêm đề thi.png",
+    "Đồ Án Tốt Nghiệp/Project3/Project 3.md",
+    "Đồ Án Tốt Nghiệp/Project3/Backend.md",
+    "Đồ Án Tốt Nghiệp/Frontend.md",
+    "Đồ Án Tốt Nghiệp/Microservice.md",
+    "Đồ Án Tốt Nghiệp/System Design.md",
+    "Đồ Án Tốt Nghiệp/Project3/Xác định yêu cầu.md",
+    "Công nghệ Web/Untitled.md",
+    "Năm 3/Thiết kế và xây dựng phần mềm/Chữa đề thi/Câu 3.md",
+    "Năm 3/2022-12-28.md",
+    "Năm 3/Phát triển ứng dụng đa nền tảng/Ôn thi/React Native.md",
+    "Năm 3/Phát triển ứng dụng đa nền tảng/Ôn thi/Kiến trúc Android.md",
+    "Năm 3/Phát triển ứng dụng đa nền tảng/Ôn thi/Flutter.md",
+    "Năm 3/Thiết kế và xây dựng phần mềm/Thiết kế biểu đồ lớp.md",
+    "Năm 3/Thiết kế và xây dựng phần mềm/Thiết kế lớp.md",
+    "Năm 3/Thiết kế ứng dụng di động/AsyncTask.md",
+    "Năm 3/Phát triển ứng dụng đa nền tảng/Đa nền tảng với Cloud Computing.md",
+    "Năm 3/Phát triển ứng dụng đa nền tảng/Ôn thi/Nguyên lý thiết kế giao diện.md",
+    "Năm 3/Trải nghiệm và giao diện người dùng/Bài 8 - Tạo mẫu thử.md",
+    "Năm 3/Trải nghiệm và giao diện người dùng/Bài tập lớn.md",
+    "Năm 3/Thiết kế và xây dựng phần mềm/Thiết kế giao diện đồ hoạ.md",
+    "Năm 3/Thiết kế và xây dựng phần mềm/Phân tích use case.md",
+    "Năm 3/Thiết kế và xây dựng phần mềm/Báo cáo cuối kì.md",
+    "Năm 3/Thiết kế và xây dựng phần mềm/Bài tập lớn.md",
+    "Năm 3/Untitled.canvas",
+    "Năm 3/Thiết kế ứng dụng di động/Flow.canvas"
+  ]
+}

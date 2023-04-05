@@ -1,0 +1,19 @@
+@startuml
+title Xóa đề thi
+|Người dùng|
+start
+:Thực hiện xóa đề thi;
+|Hệ thống|
+if (Đề thi hiện tại đang ở trong một cuộc thi?) then (no)
+  :Hiển thị thống báo xác nhận xóa;
+  |Người dùng|
+  :Submit;
+  |Hệ thống|
+  :Cập nhật kiểm tra quyền\ntruy cập của người dùng và\nthực hiện xóa thông tin ra\nkhỏi đề thi hiện tại và\ncập nhật thông tin;
+else (yes)
+  :Hiển thị thông báo không\ncho phép xóa, bắt buộc phải gỡ\nbài muốn xóa ra khỏi cuộc thi mới\nđược xóa;
+  stop
+endif
+|Người dùng|
+stop
+@enduml

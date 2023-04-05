@@ -1,0 +1,24 @@
+@startuml
+|Người dùng|
+start
+:Chọn chức năng "Chỉnh sửa đề thi";
+|Hệ thống|
+if (Người dùng chưa đăng nhập\nhoặc không có quyền chỉnh\nsửa đề thi) then (no)
+  :Hiển thị thông tin đề thi hiện tại;
+  :Cập nhật thông tin mới;
+  :Xác nhận và submit \nthông tin lên hệ thống;
+  |Hệ thống|
+  :Kiểm tra thông tin;
+  if (Thông tin hợp lệ?) then (yes)
+    :Cập nhật thông tin đề thi;
+    :Hiển thị thông báo\n"Cập nhật đề thi thành công";
+  else (no)
+    :Hiển thị thông báo lỗi tương ứng;
+  endif
+else (yes)
+  :Yêu cầu đăng nhập hoặc không\ncó quyền chỉnh sửa đề thi;
+endif
+|Người dùng|
+:Kết thúc;
+stop
+@enduml

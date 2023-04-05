@@ -1,0 +1,29 @@
+@startuml
+title Thống kê các bài nạp của người dùng
+
+start
+:Người dùng bấm nút "My Submission";
+if (Có ID đề thi?) then (yes)
+  :Hệ thống kiểm tra và lấy dữ liệu các lần nạp của người dùng về đề thi tương ứng;
+  :Hệ thống hiển thị danh sách các lần nạp bài gồm các thông tin sau:
+  - Thời gian nạp
+  - Trạng thái của bài nạp (đang được chấm/chưa chấm/đã chấm xong)
+  - Kết quả được chấm
+  - Thông tin lỗi kèm theo
+  - Thời gian chạy của code
+  - Bộ nhớ chiếm dụng của code
+  - Source code người dùng đã submit;
+else (no)
+  :Hệ thống kiểm tra và lấy dữ liệu các lần nạp của người dùng;
+  :Hệ thống hiển thị danh sách các lần nạp bài gồm các thông tin sau:
+  - Thời gian nạp
+  - Trạng thái của bài nạp (đang được chấm/chưa chấm/đã chấm xong)
+  - Kết quả được chấm
+  - Thông tin lỗi kèm theo
+  - Thời gian chạy của code
+  - Bộ nhớ chiếm dụng của code
+  - Source code người dùng đã submit;
+endif
+
+stop
+@enduml

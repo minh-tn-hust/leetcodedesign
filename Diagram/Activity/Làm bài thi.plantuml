@@ -1,0 +1,19 @@
+@startuml
+title Người dùng làm bài thi
+
+|Người dùng|
+start
+:1. Lựa chọn đề thi;
+:2. Cung cấp source code;
+:3. Nhấn nút Submit;
+|Hệ thống|
+:4. Kiểm tra và ghi nhận bài nộp;
+:5. Thực hiện chấm bài;
+:6. Trả kết quả bài chấm;
+|Người dùng|
+:Hiển thị kết quả bài chấm;
+|Hệ thống|
+:Hiển thị danh sách các lần nạp bài;
+|Người dùng|
+stop
+@enduml

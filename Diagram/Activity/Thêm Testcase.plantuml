@@ -1,0 +1,22 @@
+@startuml
+|Người dùng|
+start
+:Chọn chỉnh sửa Testcase trong đề thi;
+|Hệ thống|
+if (Kiểm tra quyền truy cập) then (Có quyền)
+  :Hiển thị lại thông\ntin về Testcase;
+  |Người dùng|
+  :Cập nhật thông tin\nmới cho Testcase;
+  :Submit;
+  |Hệ thống|
+  if (Thông tin Testcase hợp lệ) then (Có)
+    :Cập nhật thông tin\nTestcase vào DB;
+    :Cập nhật đề thi mới nhất;
+  else (Không)
+    :Hiển thị thông báo lỗi;
+  endif
+else (Không có quyền)
+  :Hiển thị thông báo\nkhông có quyền truy cập;
+endif
+stop
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+|Người dùng|
+start
+:Chọn chức năng "Thêm đề thi";
+|Hệ thống|
+if (Người dùng chưa đăng nhập) then (no)
+  :Hiển thị giao diện nhập đề thi;
+  |Người dùng|
+  :Cung cấp thông tin về đề thi;
+  :Lựa chọn cách hiển thị thông báo lỗi (nếu có);
+  :Xác nhận và submit thông tin lên hệ thống;
+  |Hệ thống|
+  :Kiểm tra thông tin;
+  if (Thông tin hợp lệ?) then (yes)
+    :Lưu trữ đề thi;
+    :Hiển thị thông báo "Thêm đề thi thành công";
+  else (no)
+    :Hiển thị thông báo lỗi tương ứng;
+  endif
+else (yes)
+  :Yêu cầu đăng nhập;
+endif
+|Người dùng|
+:Kết thúc;
+stop
+@enduml

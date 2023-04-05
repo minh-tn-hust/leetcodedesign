@@ -1,0 +1,38 @@
+@startuml
+title Biểu đồ hoạt động - Xóa Testcase trong đề thi
+
+|Người dùng|
+start
+:Chọn chức năng xóa testcase;
+|Hệ thống|
+if (Đề thi đã được tạo?) then (yes)
+  :Hiển thị danh sách các testcase trong đề thi;
+  |Người dùng|
+  :Chọn testcase muốn xóa;
+  |Hệ thống|
+  if (Có chọn testcase?) then (yes)
+    :Yêu cầu xác nhận xóa testcase;
+    |Người dùng|
+    :Xác nhận xóa testcase;
+    |Hệ thống|
+    :Cập nhật đề thi mới sau khi đã xóa testcase;
+  else (no)
+    |Người dùng|
+    :Hiển thị thông báo yêu cầu chọn testcase để xóa;
+    repeat
+      :Chọn testcase muốn xóa;
+    repeat while (Có chọn testcase?);
+    |Hệ thống|
+    :Yêu cầu xác nhận xóa testcase;
+    |Người dùng|
+    :Xác nhận xóa testcase;
+    |Hệ thống|
+    :Cập nhật đề thi mới sau khi đã xóa testcase;
+  endif
+else (no)
+  |Người dùng|
+  :Hiển thị thông báo không có testcase nào trong đề thi;
+endif
+|Người dùng|
+:Kết thúc;
+@enduml

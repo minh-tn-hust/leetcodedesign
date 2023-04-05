@@ -1,0 +1,20 @@
+@startuml
+title Kiểm thử đề thi
+
+|Người dùng|
+start
+:Người dùng cung cấp source code cần chấm thử;
+:Người dùng bấm nút "Checking";
+|Hệ thống|
+if (Người dùng đã đăng nhập?) then (yes)
+  :Hệ thống thực hiện chấm bài;
+  :Kiểm tra và thống kê kết quả;
+  :Trả kết quả về cho người dùng;
+else (no)
+  :Yêu cầu người dùng đăng nhập;
+endif
+|Người dùng|
+:Người dùng xem danh sách các đề thi có thể làm được;
+:Hiển thị thông tin danh sách các đề thi;
+stop
+@enduml
