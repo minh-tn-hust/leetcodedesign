@@ -340,14 +340,97 @@
 ## Người dùng
 ### Thống kê các bài tập
 ![[Thống kê bài tập.png]]
-### Thông kê các lần nạp bài
+### Thống kê các lần nạp bài
 ![[Thống kê các lần nộp bài.png]]
 ### Làm bài
 ![[Làm bài thi.png]]
 ### Chấm bài
 ![[Chấm bài thi.png]]
 
-# Biểu đồ sequence
 
 # Thiết kế Database
 ![[Database.png]]
+## Đặc tả Cơ sở dữ liệu
+### Đặc tả bảng User
+|Tên trường|Kiểu dữ liệu|Mô tả|Ràng buộc|
+|-|-|-|-|
+|id|Interger|Mã định danh người dùng|Not null, Unique|
+|username|varchar(255)|Tên hiển thị của người dùng trên hệ thống|Not null|
+|full_name|varchar(255)|Tên người dùng sử dụng |
+|gender|varchar(1)|Giới tính của người dùng|Not null|
+|created_at|DateTime|Thời gian người dùng tạo tài khoản|
+|rating|Interger|Tỉ lệ giải được các bài có trong hệ thống của người dùng|
+
+## Đặc tả bảng Problem
+| Tên trường             | Kiểu dữ liệu | Mô tả                                                             | Ràng buộc        |
+|------------------------|--------------|-------------------------------------------------------------------|------------------|
+| id                     | Integer      | Mã định danh của vấn đề                                            | Primary key      |
+| ownerId                | Integer      | Mã định danh của chủ sở hữu (người tạo vấn đề)                        | Foreign key      |
+| title                  | Text         | Tiêu đề của vấn đề                                                 | Not null         |
+| example                | Text         | Ví dụ về đầu vào/đầu ra của vấn đề                                  |     Not null             |
+| numOfSubmission        | Integer      | Số lượng lần nộp bài giải cho vấn đề                                |      Not null            |
+| acSubmission           | Integer      | Số lượng lần nộp bài giải đúng (Accepted) cho vấn đề                 |      Not null            |
+| timeLimitSetting       | Integer      | Giới hạn thời gian chạy của bài giải cho vấn đề                      |      Not null            |
+| memoryLimitSetting     | Integer      | Giới hạn bộ nhớ chạy của bài giải cho vấn đề                         |      Not null            |
+| displayTestCaseSetting | TestcaseShow | Cách hiển thị bộ test case của vấn đề                               |       Not null           |
+| HardLevel              | HardLevel    | Độ khó của vấn đề                                                  |      Not null            |
+| isPretext              | Boolean      | Xác định bộ test case đã được kiểm thử trước hay chưa |     Not null             |
+
+
+### Đặc tả bảng Submission
+| Tên trường            | Kiểu dữ liệu | Mô tả                                                     | Ràng buộc        |
+|-----------------------|--------------|-----------------------------------------------------------|------------------|
+| ownerId               | Integer      | Mã định danh của người dùng gửi bài                       | Tham chiếu (FK)  |
+| id                    | Integer      | Mã định danh của bài nộp                                  | Khóa chính (PK)   |
+| problemId             | Integer      | Mã định danh của vấn đề liên quan đến bài nộp             | Tham chiếu (FK)  |
+| source                | Text         | Mã nguồn (source code) của bài nộp                         |Not null|
+| status                | SubmissionStatus | Trạng thái của bài nộp                              |Not null|
+| numberTestcasePass    | Integer      | Số lượng bài kiểm tra (testcase) đã vượt qua của bài nộp  |Not null|
+| points                | Integer      | Điểm số đạt được từ bài nộp                               |Not null|
+| error                 | Text         | Thông báo lỗi (error message) của bài nộp                 |Not null|
+| language              | Language     | Ngôn ngữ được sử dụng trong bài nộp                        |Not null|
+### Đặc tả bảng Tescase
+| Tên trường   | Kiểu dữ liệu | Mô tả                                             | Ràng buộc       |
+|--------------|--------------|---------------------------------------------------|-----------------|
+| id           | Integer      | Mã định danh của testcase                         | Khóa chính (PK)  |
+| problemId    | Integer      | Mã định danh của vấn đề liên quan đến testcase    | Tham chiếu (FK) |
+| inp          | BLOB         | Dữ liệu đầu vào của testcase                     |     Not null            |
+| out          | BLOB         | Dữ liệu đầu ra của testcase                      |       Not null          |
+### Đặc tả bảng DemoTestcase
+| Tên trường   | Kiểu dữ liệu | Mô tả                                        | Ràng buộc        |
+|--------------|--------------|----------------------------------------------|------------------|
+| ownerId      | Integer      | Mã định danh của người dùng sở hữu testcase | Tham chiếu (FK)  |
+| problemId    | Integer      | Mã định danh của vấn đề liên quan đến testcase | Tham chiếu (FK)  |
+| explaination | Text         | Giải thích về testcase                      |         Not null         |
+| exampleData  | Text         | Dữ liệu mẫu của testcase                     |        Not null          |
+
+### Đặc tả bảng ProblemCategory
+| Tên trường  | Kiểu dữ liệu | Mô tả                                   | Ràng buộc  |
+|-------------|--------------|-----------------------------------------|------------|
+| problemId   | Integer      | Mã định danh của vấn đề                  | Foreign key|
+| categoryId  | Integer      | Mã định danh của danh mục vấn đề         | Foreign key|
+
+### Đặc tả bảng Category
+| Tên trường  | Kiểu dữ liệu | Mô tả                                   | Ràng buộc  |
+|-------------|--------------|-----------------------------------------|------------|
+| id          | Integer      | Mã định danh của danh mục                | Primary key|
+| type        | Text         | Loại danh mục (thể loại) của vấn đề      |   Not null         |
+
+## Phân chia cơ sở dữ liệu
+### Code Execution Service
+- Table **testcase**: Được giả định là lưu trữ thông tin về các testcase (bộ kiểm thử) của bài toán. Là một bảng chứa các dữ liệu cần thiết để kiểm thử mã nguồn được submit, như input và expected output của các testcase.
+- Table **submission**:  Bảng để lưu trữ các thông tin liên quan đến các lần submit (nộp bài) từ người dùng, bao gồm thông tin về mã nguồn, ngôn ngữ lập trình, trạng thái của submission (ví dụ: đang chờ kiểm tra, đã chấm điểm, không đạt...), và các thông tin khác liên quan.
+- **Enum Language**: Một kiểu dữ liệu định nghĩa các ngôn ngữ lập trình được hỗ trợ trong hệ thống của bạn, có thể dùng để đại diện cho giá trị ngôn ngữ lập trình trong các trường dữ liệu liên quan đến mã nguồn (ví dụ: trong bảng submission).
+- **Enum SubmissionStatus**:  Một kiểu dữ liệu định nghĩa các trạng thái của các submission, ví dụ như "đang chờ kiểm tra", "đã chấm điểm", "không đạt", v.v. Có thể dùng để đại diện cho trạng thái của các submission trong hệ thống của bạn.
+### Problem Management Service
+- Table **user**: Bảng để lưu trữ thông tin người dùng, bao gồm các thông tin như tên, email, mật khẩu, v.v. Có thể sử dụng bảng này để quản lý thông tin người dùng tham gia vào hệ thống của bạn.
+- Table **problem**:  Bảng để lưu trữ thông tin về các bài toán (problems) trong hệ thống của bạn, bao gồm các thông tin như tên, mô tả, độ khó, v.v.
+- Table **problemCategory**: Có thể đây là bảng để lưu trữ thông tin về các danh mục (categories) của các bài toán, giúp phân loại các bài toán trong hệ thống của bạn.
+- Table **demoTestcase**: Giả định là bảng để lưu trữ thông tin về các testcase mẫu hoặc kiểm thử của các bài toán, có thể được sử dụng để hiển thị cho người dùng hoặc để phục vụ mục đích khác.
+- Table **category**: Có thể đây là bảng để lưu trữ thông tin về các danh mục khác, có thể được sử dụng trong hệ thống của bạn, ngoài danh mục của các bài toán. Ví dụ: danh mục ngôn ngữ lập trình, danh mục độ khó, v.v.
+- Enum **HardLevel**: Có thể đây là một kiểu dữ liệu định nghĩa các mức độ khó của các bài toán, có thể được sử dụng để đại diện cho mức độ khó của các bài toán trong hệ thống của bạn.
+- Enum **TestcaseShow**: Có thể đây là một kiểu dữ liệu định nghĩa các tùy chọn hiển thị của các testcase, ví dụ như "public" (công khai), "private" (riêng tư), "sample" (mẫu), v.v. Có thể dùng để đại diện cho cách hiển thị của các testcase trong hệ thống của bạn.
+
+# Kiến trúc hệ thống
+![[SequenceDiagram.drawio.png]]
+

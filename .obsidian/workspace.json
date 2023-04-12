@@ -25,32 +25,62 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Phân tích yêu cầu/Phân tích yêu cầu.md",
+                "file": "Diagram/Database.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "7b242d81db279504",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Công nghệ/Golang.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "fe9f3614db941a32",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Công nghệ/Kubernates.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "d70bd79f64c7dd67",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Công nghệ/Docker.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f06e48d26b40159a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Công nghệ/Golang.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
-      },
-      {
-        "id": "53a615c68b8909e3",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "83a095fa812bbf85",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Phân tích yêu cầu/Phân tích yêu cầu (Clone).md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          }
-        ]
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -116,7 +146,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Phân tích yêu cầu/Phân tích yêu cầu.md",
+                "file": "Công nghệ/Golang.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -133,7 +163,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Phân tích yêu cầu/Phân tích yêu cầu.md",
+                "file": "Công nghệ/Golang.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -156,7 +186,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Phân tích yêu cầu/Phân tích yêu cầu.md"
+                "file": "Công nghệ/Golang.md"
               }
             }
           }
@@ -177,16 +207,22 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ee846abcc1d6fe4a",
+  "active": "f06e48d26b40159a",
   "lastOpenFiles": [
-    "Phân tích yêu cầu/Phân tích yêu cầu (Clone).md",
-    "Phân tích yêu cầu/Phân tích yêu cầu.md",
+    "Công nghệ/RabbitMQ.md",
+    "Công nghệ/Docker.md",
+    "Công nghệ/Kubernates.md",
+    "Công nghệ/Golang.md",
     "Diagram/Database.md",
+    "Công nghệ",
+    "Phân tích yêu cầu/Phân tích yêu cầu.md",
+    "Phân tích yêu cầu/Phân tích yêu cầu (Clone).md",
+    "Phân tích yêu cầu.pdf",
+    "SequenceDiagram.drawio.png",
     "Database.png",
     "Database.png.crdownload",
     "out/Diagram/Activity/Database/Thiết kế database.txt",
     "out/Diagram/Activity/Database",
-    "Phân tích yêu cầu.pdf",
     "out/Diagram/Activity/Thống kê các lần nộp bài/Thống kê các lần nộp bài.png",
     "out/Diagram/Activity/Thống kê các lần nộp bài",
     "Diagram/Activity/Thống kê các lần nộp bài.plantuml",
@@ -195,13 +231,11 @@
     "Diagram/Activity/Thống kê bài tập.plantuml",
     "out/Diagram/Activity/Kiểm thử testcase/Kiểm thử testcase.png",
     "out/Diagram/Activity/Kiểm thử testcase",
-    "Diagram/Activity/Kiểm thử testcase.plantuml",
     "out/Diagram/Activity/Chấm bài thi/Chấm bài thi.png",
     "out/Diagram/Activity/Chỉnh sửa testcase/Chỉnh sửa testcase.png",
     "out/Diagram/Activity/Chỉnh sửa đề thi/Chỉnh sửa đề thi.png",
     "out/Diagram/Activity/Danh sách bài làm/Danh sách bài làm.png",
     "out/Diagram/Activity/Làm bài thi/Làm bài thi.png",
-    "out/Diagram/Activity/Thêm đề thi/Thêm đề thi.png",
     "Đồ Án Tốt Nghiệp/Project3/Project 3.md",
     "Đồ Án Tốt Nghiệp/Project3/Backend.md",
     "Đồ Án Tốt Nghiệp/Frontend.md",
@@ -221,10 +255,6 @@
     "Năm 3/Phát triển ứng dụng đa nền tảng/Ôn thi/Nguyên lý thiết kế giao diện.md",
     "Năm 3/Trải nghiệm và giao diện người dùng/Bài 8 - Tạo mẫu thử.md",
     "Năm 3/Trải nghiệm và giao diện người dùng/Bài tập lớn.md",
-    "Năm 3/Thiết kế và xây dựng phần mềm/Thiết kế giao diện đồ hoạ.md",
-    "Năm 3/Thiết kế và xây dựng phần mềm/Phân tích use case.md",
-    "Năm 3/Thiết kế và xây dựng phần mềm/Báo cáo cuối kì.md",
-    "Năm 3/Thiết kế và xây dựng phần mềm/Bài tập lớn.md",
     "Năm 3/Untitled.canvas",
     "Năm 3/Thiết kế ứng dụng di động/Flow.canvas"
   ]
