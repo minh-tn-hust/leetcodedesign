@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Công nghệ/Golang.md",
+                "file": "Công nghệ/Golang/Golang Cơ bản.md",
                 "mode": "source",
                 "source": false
               }
@@ -73,14 +73,38 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Công nghệ/Golang.md",
+                "file": "Công nghệ/Golang/Golang Cơ bản.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "93db1d1364e44324",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Untitled.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "d99a93071b6fb560",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Công nghệ/Golang/Go Advanced.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -146,7 +170,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Công nghệ/Golang.md",
+                "file": "Untitled.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,7 +187,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Công nghệ/Golang.md",
+                "file": "Untitled.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -186,7 +210,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Công nghệ/Golang.md"
+                "file": "Untitled.md"
               }
             }
           }
@@ -207,14 +231,23 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "f06e48d26b40159a",
+  "active": "93db1d1364e44324",
   "lastOpenFiles": [
+    "Pasted image 20230421161101.png",
+    "Pasted image 20230421160257.png",
+    "Pasted image 20230421160256.png",
+    "Pasted image 20230421160255.png",
+    "Pasted image 20230421160254 1.png",
+    "Pasted image 20230421160254.png",
+    "Công nghệ/Golang/Golang Cơ bản.md",
+    "Untitled.md",
+    "Công nghệ/Golang/Go Advanced.md",
+    "Công nghệ/Golang",
     "Learn Go/greetings",
     "Learn Go",
     "Công nghệ/RabbitMQ.md",
     "Công nghệ/Docker.md",
     "Công nghệ/Kubernates.md",
-    "Công nghệ/Golang.md",
     "Diagram/Database.md",
     "Công nghệ",
     "Phân tích yêu cầu/Phân tích yêu cầu.md",
@@ -229,14 +262,7 @@
     "out/Diagram/Activity/Thống kê các lần nộp bài",
     "Diagram/Activity/Thống kê các lần nộp bài.plantuml",
     "out/Diagram/Activity/Thống kê bài tập/Thống kê bài tập.png",
-    "out/Diagram/Activity/Thống kê bài tập",
-    "Diagram/Activity/Thống kê bài tập.plantuml",
     "out/Diagram/Activity/Kiểm thử testcase/Kiểm thử testcase.png",
-    "out/Diagram/Activity/Chấm bài thi/Chấm bài thi.png",
-    "out/Diagram/Activity/Chỉnh sửa testcase/Chỉnh sửa testcase.png",
-    "out/Diagram/Activity/Chỉnh sửa đề thi/Chỉnh sửa đề thi.png",
-    "out/Diagram/Activity/Danh sách bài làm/Danh sách bài làm.png",
-    "out/Diagram/Activity/Làm bài thi/Làm bài thi.png",
     "Đồ Án Tốt Nghiệp/Project3/Project 3.md",
     "Đồ Án Tốt Nghiệp/Project3/Backend.md",
     "Đồ Án Tốt Nghiệp/Frontend.md",
@@ -253,8 +279,6 @@
     "Năm 3/Thiết kế và xây dựng phần mềm/Thiết kế lớp.md",
     "Năm 3/Thiết kế ứng dụng di động/AsyncTask.md",
     "Năm 3/Phát triển ứng dụng đa nền tảng/Đa nền tảng với Cloud Computing.md",
-    "Năm 3/Phát triển ứng dụng đa nền tảng/Ôn thi/Nguyên lý thiết kế giao diện.md",
-    "Năm 3/Trải nghiệm và giao diện người dùng/Bài 8 - Tạo mẫu thử.md",
     "Năm 3/Untitled.canvas",
     "Năm 3/Thiết kế ứng dụng di động/Flow.canvas"
   ]
