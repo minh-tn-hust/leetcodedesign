@@ -33,7 +33,7 @@ export default function AuthenticationScreen() {
     return (
         <>
             <main>
-                <div className={`flex items-center justify-center h-screen bg-[#ECF0F1]`}>
+                <div className={`flex items-center justify-center h-screen bg-[#ECF0F1] pt-12`}>
                     <div className={'w-[400px] bg-white shadow-black pt-10 pb-8 px-8 flex flex-col items-center'}>
                         <div>
                             <img
