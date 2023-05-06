@@ -54,8 +54,6 @@ export default function SignUpForm({onSignIn, ...props}) {
         setError("username", {message : emailError});
     }
 
-    console.log(errors)
-
     const onSubmitSignUpForm = function(formValue) {
         // TODO: Thực hiện gọi API để đăng nhập
 

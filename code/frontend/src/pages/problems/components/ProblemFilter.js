@@ -71,7 +71,7 @@ export default function ProblemFilter(props) {
                     <MenuItem value={ProblemStatusEnum.ALL}> All </MenuItem>
                 </Select>
             </FormControl>
-            <div class={"flex-1"}></div>
+            <div className={"flex-1"}></div>
             <FormControlLabel
                 className={"ml-3"}
                 control={<Checkbox

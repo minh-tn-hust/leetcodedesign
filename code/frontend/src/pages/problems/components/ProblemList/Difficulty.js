@@ -1,4 +1,5 @@
 import {HardLevelEnum, ProblemStatusEnum} from "@/constants/problemStatus";
+import {useEffect, useState} from "react";
 
 /**
  * @param {HardLevelEnum | ProblemStatusEnum.HEADER} title
@@ -17,9 +18,14 @@ const COLOR = 0;
 const TITLE = 1;
 
 export default function Difficulty({hardLevel, ...props}) {
-    function displayContent() {
-        switch (hardLevel) {
+    const [displayContent, setDisplayContent] = useState("");
 
+
+    useEffect(() => {
+        setDisplayContent(getDisplayContent());
+    }, [])
+    function getDisplayContent() {
+        switch (hardLevel) {
             case ProblemStatusEnum.HEADER:
                 return (
                     <div className={"font-semibold"}>Difficulty</div>
@@ -39,7 +45,9 @@ export default function Difficulty({hardLevel, ...props}) {
 
     return (
         <div className={"w-20 flex flex-row items-center justify-start pl-2"}>
-            {displayContent()}
+            {
+                displayContent
+            }
         </div>
     );
 };

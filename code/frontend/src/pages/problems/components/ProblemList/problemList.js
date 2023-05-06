@@ -14,33 +14,28 @@ function ProblemListHeader(props) {
     )
 };
 
-function ProblemListSlot(props) {
+/**
+ * @param {ProblemSlot} problemSlot
+ * @returns {JSX.Element}
+ * @constructor
+ */
+function ProblemListSlot({problemSlotDetails}) {
     return (
         <div className={"w-full h-[40px] bg-blue-300 flex flex-row even:bg-[#F7F8FA] odd:bg-white"}>
-            <Status status={ProblemStatusEnum.UNSOLVED}/>
-            <Title title={"Some thing that matter, you need to check thí"}/>
-            <Difficulty hardLevel={HardLevelEnum.MEDIUM}/>
+            <Status status={problemSlotDetails.status}/>
+            <Title title={problemSlotDetails.title}/>
+            <Difficulty hardLevel={problemSlotDetails.hardLevel}/>
         </div>
     )
 };
-export default function Index(props) {
-    const a = [
-        1, 2, 5, 3, 4,
-        1, 2, 5, 3, 4,
-        1, 2, 5, 3, 4,
-        1, 2, 5, 3, 4,
-        1, 2, 5, 3, 4,
-        1, 2, 5, 3, 4,
-        1, 2, 5, 3, 4,
-        1, 2, 5, 3, 4,
-    ];
+export default function ProblemList({listProblem, ...props}) {
     return (
         <div className={"w-full h-full"}>
             <ProblemListHeader/>
             {
-                a.map((e, i) => {
+                listProblem.map((e, i) => {
                     return (
-                        <ProblemListSlot key={"ProblemListSlot" + i}/>
+                        <ProblemListSlot key={"ProblemListSlot" + i} problemSlotDetails={e}/>
                     );
                 })
             }

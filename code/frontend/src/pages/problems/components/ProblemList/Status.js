@@ -2,6 +2,7 @@ import DoneAllIcon from '@mui/icons-material/DoneAll';
 import RemoveDoneIcon from '@mui/icons-material/RemoveDone';
 import {ProblemStatusEnum} from "@/constants/problemStatus";
 import {red} from "@mui/material/colors";
+import {useEffect, useState} from "react";
 /**
  * @param {ProblemStatusEnum} content
  * @param props
@@ -9,7 +10,13 @@ import {red} from "@mui/material/colors";
  * @constructor
  */
 export default function Status({status, ...props}) {
-    function displayContent() {
+    const [displayContent, setDisplayContent] = useState("");
+
+    useEffect(() => {
+        setDisplayContent(getDisplayContent());
+    }, [])
+
+    function getDisplayContent() {
         switch (status) {
             case ProblemStatusEnum.NONE:
                 return "";
@@ -37,7 +44,7 @@ export default function Status({status, ...props}) {
     return (
         <div className={"pl-2 w-16 text-center flex flex-row items-center justify-start"}>
             {
-                displayContent()
+                displayContent
             }
         </div>
     )

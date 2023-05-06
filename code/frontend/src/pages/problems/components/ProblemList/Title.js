@@ -1,4 +1,5 @@
 import {ProblemStatusEnum} from "@/constants/problemStatus";
+import {useEffect, useState} from "react";
 
 /**
  * @param {String | ProblemStatusEnum.HEADER} title
@@ -7,7 +8,13 @@ import {ProblemStatusEnum} from "@/constants/problemStatus";
  * @constructor
  */
 export default function Title({title, ...props}) {
-    function displayContent() {
+    const [displayContent, setDisplayContent] = useState("")
+
+    useEffect(() => {
+        setDisplayContent(getDisplayContent);
+    }, [])
+
+    function getDisplayContent() {
         switch (title) {
 
             case ProblemStatusEnum.HEADER:
@@ -22,7 +29,7 @@ export default function Title({title, ...props}) {
 
     return (
         <div className={"flex-1 flex flex-row items-center justify-start pl-2 hover:text-[#1eb6d4] cursor-pointer"}>
-            {displayContent()}
+            {displayContent}
         </div>
     );
 };
