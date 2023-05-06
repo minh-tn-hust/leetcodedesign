@@ -1,8 +1,9 @@
 import {Button, Collapse} from "@mui/material";
-import {CategoryKey, ProblemCategory} from "@/model/category";
+import {CategoryKey, ProblemCategory} from "@/constants/category";
 import {useState} from "react";
 import ExpandIcon from '@mui/icons-material/Expand';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
+import {HardLevelEnum, ProblemStatusEnum} from "@/constants/problemStatus";
 
 function CategoryMember({cateKey, onChooseCategory, isChoosing, number, ...props}) {
     const handleChooseCategory = function () {
@@ -20,6 +21,7 @@ function CategoryMember({cateKey, onChooseCategory, isChoosing, number, ...props
 
     return (
         <Button
+            size={"small"}
             className={`px-2 py-1 text-black rounded-[10px] mr-2 mb-2 normal-case ${isChoosing ? "bg-[#bdbdbd] font-semibold" : ""}`}
             onClick={handleChooseCategory}
             variant={"outlined"}
@@ -55,7 +57,7 @@ export default function CategoryList(props) {
             <div className={"flex-1 flex flex-wrap"}>
                 {
                     CategoryKey.map((cateKey, index) => {
-                        if (index > 5 && isExpand) {
+                        if (index > 5 && !isExpand) {
                             return;
                         }
 
@@ -70,15 +72,16 @@ export default function CategoryList(props) {
             </div>
             <div className={"flex flex-col"}>
                 <Button
+                    size={"small"}
                     className={"w-[156px] bg-[#0069be]"}
                     variant={"contained"}
                     onClick={handleExpandCategory}
                 >
                     {
-                        isExpand ? <ExpandIcon/> : <UnfoldLessIcon/>
+                        isExpand ? <UnfoldLessIcon/> : <ExpandIcon/>
                     }
                     {
-                        (isExpand ? "Expand ": "Collapse ") + "(" + (currentKey.split("$").length - 1) + ")"
+                        (isExpand ? "Collapse " : "Expand ") + "(" + (currentKey.split("$").length - 1) + ")"
                     }
                 </Button>
             </div>

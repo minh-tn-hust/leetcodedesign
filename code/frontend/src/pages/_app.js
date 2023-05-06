@@ -1,11 +1,13 @@
 import '@/styles/globals.css'
 import NavBar from "@/shared/navbar";
-
-export default function App({ Component, pageProps }) {
+import {wrapper} from "@/reducers/store";
+function App({ Component, pageProps }) {
   return (
-      <>
-        <NavBar/>
-        <Component {...pageProps} />
-      </>
+      <div>
+          <NavBar/>
+          <Component {...pageProps} />
+      </div>
   )
-}
+};
+
+export default wrapper.withRedux(App);
