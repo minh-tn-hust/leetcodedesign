@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Clean Architecture" pattern="file[my-app]:src//*" />
+</component>

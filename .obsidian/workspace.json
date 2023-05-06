@@ -8,90 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "2be639e493cb0db8",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Phân tích yêu cầu/Phân tích yêu cầu.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "ee846abcc1d6fe4a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Diagram/Database.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "7b242d81db279504",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Công nghệ/Golang/Golang Cơ bản.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "fe9f3614db941a32",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Công nghệ/Kubernates.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "d70bd79f64c7dd67",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Công nghệ/Docker.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f06e48d26b40159a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Công nghệ/Golang/Golang Cơ bản.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "93db1d1364e44324",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Untitled.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "d99a93071b6fb560",
             "type": "leaf",
             "state": {
@@ -102,9 +18,33 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "7c880496bff1c80f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Công nghệ/Clean Architecture.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "ab0c5327231f14f9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Công nghệ/Untitled.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 6
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -170,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Untitled.md",
+                "file": "Công nghệ/Untitled.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -187,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Untitled.md",
+                "file": "Công nghệ/Untitled.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -210,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Untitled.md"
+                "file": "Công nghệ/Untitled.md"
               }
             }
           }
@@ -231,54 +171,54 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "93db1d1364e44324",
+  "active": "ab0c5327231f14f9",
   "lastOpenFiles": [
-    "Pasted image 20230421161101.png",
-    "Pasted image 20230421160257.png",
-    "Pasted image 20230421160256.png",
-    "Pasted image 20230421160255.png",
-    "Pasted image 20230421160254 1.png",
-    "Pasted image 20230421160254.png",
-    "Công nghệ/Golang/Golang Cơ bản.md",
-    "Untitled.md",
-    "Công nghệ/Golang/Go Advanced.md",
-    "Công nghệ/Golang",
-    "Learn Go/greetings",
-    "Learn Go",
-    "Công nghệ/RabbitMQ.md",
-    "Công nghệ/Docker.md",
-    "Công nghệ/Kubernates.md",
-    "Diagram/Database.md",
-    "Công nghệ",
-    "Phân tích yêu cầu/Phân tích yêu cầu.md",
-    "Phân tích yêu cầu/Phân tích yêu cầu (Clone).md",
-    "Phân tích yêu cầu.pdf",
-    "SequenceDiagram.drawio.png",
-    "Database.png",
-    "Database.png.crdownload",
-    "out/Diagram/Activity/Database/Thiết kế database.txt",
-    "out/Diagram/Activity/Database",
-    "out/Diagram/Activity/Thống kê các lần nộp bài/Thống kê các lần nộp bài.png",
-    "out/Diagram/Activity/Thống kê các lần nộp bài",
-    "Diagram/Activity/Thống kê các lần nộp bài.plantuml",
-    "out/Diagram/Activity/Thống kê bài tập/Thống kê bài tập.png",
-    "out/Diagram/Activity/Kiểm thử testcase/Kiểm thử testcase.png",
-    "Đồ Án Tốt Nghiệp/Project3/Project 3.md",
-    "Đồ Án Tốt Nghiệp/Project3/Backend.md",
-    "Đồ Án Tốt Nghiệp/Frontend.md",
-    "Đồ Án Tốt Nghiệp/Microservice.md",
-    "Đồ Án Tốt Nghiệp/System Design.md",
-    "Đồ Án Tốt Nghiệp/Project3/Xác định yêu cầu.md",
-    "Công nghệ Web/Untitled.md",
-    "Năm 3/Thiết kế và xây dựng phần mềm/Chữa đề thi/Câu 3.md",
-    "Năm 3/2022-12-28.md",
-    "Năm 3/Phát triển ứng dụng đa nền tảng/Ôn thi/React Native.md",
-    "Năm 3/Phát triển ứng dụng đa nền tảng/Ôn thi/Kiến trúc Android.md",
-    "Năm 3/Phát triển ứng dụng đa nền tảng/Ôn thi/Flutter.md",
-    "Năm 3/Thiết kế và xây dựng phần mềm/Thiết kế biểu đồ lớp.md",
-    "Năm 3/Thiết kế và xây dựng phần mềm/Thiết kế lớp.md",
-    "Năm 3/Thiết kế ứng dụng di động/AsyncTask.md",
-    "Năm 3/Phát triển ứng dụng đa nền tảng/Đa nền tảng với Cloud Computing.md",
+    "code/frontend/node_modules/yargs-parser/build/lib/yargs-parser.js",
+    "code/frontend/node_modules/yargs-parser/build/lib/yargs-parser-types.js",
+    "code/frontend/node_modules/yargs-parser/build/lib/tokenize-arg-string.js",
+    "code/frontend/node_modules/yargs-parser/build/lib/string-utils.js",
+    "code/frontend/node_modules/yargs-parser/build/lib/index.js",
+    "code/frontend/node_modules/yargs-parser/build/index.cjs",
+    "code/frontend/node_modules/yargs-parser/build/lib",
+    "code/frontend/node_modules/yargs-parser/README.md",
+    "code/frontend/node_modules/yargs-parser/LICENSE.txt",
+    "code/frontend/node_modules/yargs-parser/package.json",
+    "code/frontend/node_modules/yargs-parser/CHANGELOG.md",
+    "code/frontend/node_modules/yargs-parser/build",
+    "code/frontend/node_modules/yargs-parser/browser.js",
+    "code/frontend/node_modules/y18n/README.md",
+    "code/frontend/node_modules/y18n/CHANGELOG.md",
+    "code/frontend/node_modules/xmlchars/README.md",
+    "code/frontend/node_modules/xml-name-validator/README.md",
+    "code/frontend/node_modules/ws/README.md",
+    "code/frontend/node_modules/workbox-sw/README.md",
+    "code/frontend/node_modules/which-typed-array/README.md",
+    "code/frontend/node_modules/which-typed-array/CHANGELOG.md",
+    "code/frontend/node_modules/which-boxed-primitive/README.md",
+    "code/frontend/node_modules/which-boxed-primitive/CHANGELOG.md",
+    "code/frontend/node_modules/websocket-extensions/lib/pipeline/README.md",
+    "code/frontend/node_modules/websocket-extensions/README.md",
+    "code/frontend/node_modules/websocket-extensions/LICENSE.md",
+    "code/frontend/node_modules/websocket-extensions/CHANGELOG.md",
+    "code/frontend/node_modules/webpack-sources/README.md",
+    "code/frontend/node_modules/webpack-manifest-plugin/node_modules/webpack-sources/README.md",
+    "code/frontend/node_modules/webpack-manifest-plugin/node_modules/source-map/README.md",
+    "code/frontend/node_modules/webpack-manifest-plugin/node_modules/source-map/CHANGELOG.md",
+    "code/frontend/node_modules/webpack-manifest-plugin/README.md",
+    "code/frontend/node_modules/webidl-conversions/README.md",
+    "code/frontend/node_modules/webidl-conversions/LICENSE.md",
+    "code/frontend/node_modules/w3c-xmlserializer/README.md",
+    "code/frontend/node_modules/w3c-xmlserializer/LICENSE.md",
+    "code/frontend/src/logo.svg",
+    "code/frontend/node_modules/psl/browserstack-logo.svg",
+    "code/frontend/node_modules/serve-index/public/icons/page_world.png",
+    "code/frontend/node_modules/serve-index/public/icons/page_word.png",
+    "code/frontend/node_modules/serve-index/public/icons/page_white_zip.png",
+    "code/frontend/node_modules/serve-index/public/icons/page_white_wrench.png",
+    "code/frontend/node_modules/serve-index/public/icons/page_white_world.png",
+    "code/frontend/node_modules/serve-index/public/icons/page_white_word.png",
+    "code/frontend/node_modules/serve-index/public/icons/page_white_width.png",
+    "code/frontend/node_modules/serve-index/public/icons/page_white_visualstudio.png",
     "Năm 3/Untitled.canvas",
     "Năm 3/Thiết kế ứng dụng di động/Flow.canvas"
   ]
