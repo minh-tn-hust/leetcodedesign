@@ -28,8 +28,8 @@ export default function Title({title, ...props}) {
     }
 
     return (
-        <div className={"flex-1 flex flex-row items-center justify-start pl-2 hover:text-[#1eb6d4] cursor-pointer"}>
+        <a href={"/problems/id1"} className={"flex-1 flex flex-row items-center justify-start pl-2 hover:text-[#1eb6d4] cursor-pointer"}>
             {displayContent}
-        </div>
+        </a>
     );
 };
