@@ -2,36 +2,7 @@ import {Button, ButtonGroup} from "@mui/material";
 import {useEffect, useState} from "react";
 import Description from "@/pages/problems/idComponent/problem/components/Description";
 import Submission from "@/pages/problems/idComponent/problem/components/Submission";
-
-function ButtonTab({title, isSelected, onClickCallback, props}) {
-    const [buttonStyle, setButtonStyle] = useState("mx-2")
-
-    const handleClick = function() {
-        if (typeof onClickCallback === 'function') {
-            onClickCallback();
-        } else {
-            console.error("ButtonTab: onClickCallback is not a function");
-        }
-    }
-
-
-    useEffect(() => {
-        if (isSelected) {
-            setButtonStyle((state) => "mx-2 color-black font-semibold border-b border-b-black")
-        } else {
-            setButtonStyle((state) => "mx-2 color-[#5C95CB] font-normal")
-        }
-    })
-
-    return (
-        <button
-            className={buttonStyle}
-            onClick={handleClick}
-        >
-            {title}
-        </button>
-    )
-}
+import ButtonTab from "@/shared/buttonTab";
 
 const TAB_ENUM = {
     DESCRIPTION : "description",
@@ -55,12 +26,11 @@ export default function ProblemDetail(props) {
 
     return (
         <div className={"w-full h-full bg-white rounded-md flex flex-col"}>
-            <div className={"w-full h-9 border-b border-b-[#F2F3F4] flex flex-row"}>
+            <div className={"w-full border-b border-b-[#F2F3F4] flex flex-row"}>
                 <ButtonTab
                     title={"Description"}
                     isSelected={isTabDescription()}
                     onClickCallback={() => handleSelectTab(TAB_ENUM.DESCRIPTION)}
-
                 />
                 <ButtonTab
                     title={"Submissions"}

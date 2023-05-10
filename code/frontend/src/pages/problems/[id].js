@@ -21,10 +21,10 @@ export default function DoingProblem({...props}) {
             <div className={"w-2 h-full bg-red-300 cursor-ew-resize"}>
             </div>
             <div className={"flex-1 h-full bg-yellow-300 flex flex-col"}>
-                <div className={"w-full h-4/6 bg-[#F0F0F0]"}>
+                <div className={"w-full flex-1 bg-[#F0F0F0]"}>
                     <TextEditor/>
                 </div>
-                <div className={"flex-1 bg-stone-300"}>
+                <div className={"bg-[#F0F0F0] p-1"}>
                     <ProblemConsole/>
                 </div>
             </div>
