@@ -2,44 +2,16 @@ import {useEffect, useState} from "react";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ExecuteButton, {BUTTON_TYPE} from "@/pages/problems/idComponent/console/components/ExcuteButton";
-import ButtonTab from "@/shared/buttonTab";
+import ConsoleBar from "@/pages/problems/idComponent/console/components/ComsoleBar";
+import {EXECUTE_CODE_STATUS, TestCaseResult} from "@/pages/problems/idComponent/console/components/TestCaseResult";
 
-const ConsoleBarAreaEnum = {
-    TEST_CASE : "testcase",
-    RESULT : "result"
-}
 
-function ConsoleBar(props) {
-    const [area, setArea] = useState(ConsoleBarAreaEnum.TEST_CASE);
 
-    const handleChangeArea = function(newArea) {
-        setArea(newArea);
-    }
-
-    const isTestcaseArea = () => area === ConsoleBarAreaEnum.TEST_CASE;
-    const isResultArea = () => area === ConsoleBarAreaEnum.RESULT;
-
+function ConsoleDetail({height = 200, listTestcase, ...props}) {
     return (
-        <div className={"w-full bg-white rounded-md px-2 py-2"}>
-            <ButtonTab
-                title={"Test case"}
-                isSelected={isTestcaseArea()}
-                onClickCallback={() => handleChangeArea(ConsoleBarAreaEnum.TEST_CASE)}
-            />
-            <ButtonTab
-                title={"Result"}
-                isSelected={isResultArea()}
-                onClickCallback={() => handleChangeArea(ConsoleBarAreaEnum.RESULT)}
-            />
-        </div>
-
-    );
-}
-
-function ConsoleDetail(props) {
-    return (
-        <div className={"w-full h-[300px]"}>
+        <div className={"w-full"} style={{height : Math.max(height, 300)}}>
             <ConsoleBar/>
+            <TestCaseResult/>
         </div>
     );
 }
@@ -52,7 +24,7 @@ export default function ProblemConsole(props) {
     }
 
     return (
-        <div className={"bg-white rounded-md"}>
+        <div className={"bg-white rounded-md m-1"}>
             {
                 isExpanded ? <ConsoleDetail/> : <></>
             }

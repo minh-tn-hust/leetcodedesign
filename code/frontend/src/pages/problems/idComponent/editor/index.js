@@ -5,6 +5,7 @@ import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-golang";
 import "ace-builds/src-noconflict/mode-ruby";
 import "ace-builds/src-noconflict/mode-csharp";
+import "ace-builds/src-noconflict/mode-c_cpp";
 
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
@@ -18,6 +19,8 @@ export const LanguageEnum = {
     RUBY: "ruby",
     GOLANG: "golang",
     CSHARP: "csharp",
+    CPP : "c_cpp"
+
 }
 
 export const LanguageTemplate = {
@@ -44,6 +47,12 @@ end
   Console.WriteLine("helloWorld: " + something);
 }
 `,
+    c_cpp: `#include <iostream>
+#include <string>
+
+void helloWorld(std::string something) {
+  std::cout << "helloWorld: " << something << std::endl;
+}`
 }
 
 function ConfigEditorBar({handleChangeLanguage, ...props}) {

@@ -15,18 +15,29 @@ export default function DoingProblem({...props}) {
     const {id} = router.query;
     return (
         <div className={"w-full min-h-[373px] h-[922px] flex flex-row bg-[#F0F0F0]"}>
-            <div className={"w-4/12 h-full bg-[#F0F0F0] p-1"}>
+            <div className={`h-full bg-[#F0F0F0] p-1`} style={{
+                width : problemDetailWidth
+            }}>
                 <ProblemDetail/>
             </div>
-            <div className={"w-2 h-full bg-red-300 cursor-ew-resize"}>
+            <div
+                className={"w-1 h-full cursor-ew-resize hover:bg-blue-500"
+            }
+                 onDrag={(event) => {
+                     console.log(event.clientX);
+                     setProblemDetailWidth(event.clientX);
+                 }}
+                onDragEnd={(event) => {
+                    setProblemDetailWidth(event.clientX);
+                }}
+                 draggable
+            >
             </div>
-            <div className={"flex-1 h-full bg-yellow-300 flex flex-col"}>
+            <div className={"flex-1 h-full flex flex-col"}>
                 <div className={"w-full flex-1 bg-[#F0F0F0]"}>
                     <TextEditor/>
                 </div>
-                <div className={"bg-[#F0F0F0] p-1"}>
-                    <ProblemConsole/>
-                </div>
+                <ProblemConsole/>
             </div>
 
         </div>
