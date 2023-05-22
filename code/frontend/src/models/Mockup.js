@@ -1,6 +1,6 @@
 import ProblemSlot from "@/models/ProblemSlot";
 import Category from "@/models/Category";
-import {HardLevelEnum, ProblemStatusEnum} from "@/constants/problemStatus";
+import {HARD_LEVEL, PROBLEM_STATUS} from "@/constants/problemStatus";
 
 export const getListProblemMockup = function(numberOfSlot) {
     let listTitle = [
@@ -70,13 +70,13 @@ export const getListProblemMockup = function(numberOfSlot) {
         "Everything You Wanted to Know About COMPETITIVE PROGRAMMING PROBLEM and Were Too Embarrassed to Ask",
     ];
     let listStatus = [
-        ProblemStatusEnum.SOLVED,
-        ProblemStatusEnum.UNSOLVED,
+        PROBLEM_STATUS.SOLVED,
+        PROBLEM_STATUS.UNSOLVED,
     ];
     let listHardLevel = [
-        HardLevelEnum.HARD,
-        HardLevelEnum.EASY,
-        HardLevelEnum.MEDIUM
+        HARD_LEVEL.HARD,
+        HARD_LEVEL.EASY,
+        HARD_LEVEL.MEDIUM
     ];
 
     let listProblemMockup = [];

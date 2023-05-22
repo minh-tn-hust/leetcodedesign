@@ -1,8 +1,10 @@
 import {useRouter} from "next/router";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import ProblemDetail from "@/pages/problems/idComponent/problem";
 import ProblemConsole from "@/pages/problems/idComponent/console";
 import dynamic from "next/dynamic";
+import {useDispatch} from "react-redux";
+import {changeToListProblem} from "@/reducers/appRoutes/appRoutesReducer";
 
 const TextEditor = dynamic(() => import('@/pages/problems/idComponent/editor'), {
     ssr: false,
@@ -10,6 +12,12 @@ const TextEditor = dynamic(() => import('@/pages/problems/idComponent/editor'), 
 
 
 export default function DoingProblem({...props}) {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(changeToListProblem());
+    });
+
     const [problemDetailWidth, setProblemDetailWidth] = useState(852);
     const router = useRouter()
     const {id} = router.query;

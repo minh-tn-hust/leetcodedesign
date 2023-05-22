@@ -1,8 +1,8 @@
-import {ProblemStatusEnum} from "@/constants/problemStatus";
+import {PROBLEM_STATUS} from "@/constants/problemStatus";
 import {useEffect, useState} from "react";
 
 /**
- * @param {String | ProblemStatusEnum.HEADER} title
+ * @param {String | PROBLEM_STATUS.HEADER} title
  * @param props
  * @returns {JSX.Element}
  * @constructor
@@ -17,7 +17,7 @@ export default function Title({title, ...props}) {
     function getDisplayContent() {
         switch (title) {
 
-            case ProblemStatusEnum.HEADER:
+            case PROBLEM_STATUS.HEADER:
                 return (
                     <div className={"font-semibold"}>Title</div>
                 );

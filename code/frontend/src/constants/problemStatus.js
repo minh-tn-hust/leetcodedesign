@@ -1,11 +1,11 @@
-const HardLevelEnum = {
+const HARD_LEVEL = {
     EASY : "easy",
     MEDIUM : "medium",
     HARD : "hard",
     ALL : "all"
 }
 
-const ProblemStatusEnum = {
+const PROBLEM_STATUS = {
     HEADER : "header",
     NONE : "none",
     SOLVED : "solved",
@@ -14,6 +14,6 @@ const ProblemStatusEnum = {
 }
 
 export  {
-    HardLevelEnum,
-    ProblemStatusEnum
+    HARD_LEVEL,
+    PROBLEM_STATUS
 };

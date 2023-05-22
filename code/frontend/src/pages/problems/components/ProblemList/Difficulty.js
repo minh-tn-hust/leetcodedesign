@@ -1,8 +1,8 @@
-import {HardLevelEnum, ProblemStatusEnum} from "@/constants/problemStatus";
+import {HARD_LEVEL, PROBLEM_STATUS} from "@/constants/problemStatus";
 import {useEffect, useState} from "react";
 
 /**
- * @param {HardLevelEnum | ProblemStatusEnum.HEADER} title
+ * @param {HARD_LEVEL | PROBLEM_STATUS.HEADER} title
  * @param props
  * @returns {JSX.Element}
  * @constructor
@@ -26,14 +26,14 @@ export default function Difficulty({hardLevel, ...props}) {
     }, [])
     function getDisplayContent() {
         switch (hardLevel) {
-            case ProblemStatusEnum.HEADER:
+            case PROBLEM_STATUS.HEADER:
                 return (
                     <div className={"font-semibold"}>Difficulty</div>
                 );
 
-            case HardLevelEnum.HARD:
-            case HardLevelEnum.MEDIUM:
-            case HardLevelEnum.EASY:
+            case HARD_LEVEL.HARD:
+            case HARD_LEVEL.MEDIUM:
+            case HARD_LEVEL.EASY:
                 return (
                     <div className={`${color[hardLevel][COLOR]} font-semibold`}>{color[hardLevel][TITLE]}</div>
                 );

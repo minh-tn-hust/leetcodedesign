@@ -40,3 +40,24 @@ body {
     background-color: #797a7a;
     border: 1px solid #797a7a;
 }
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 0.75rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #777;
+    margin-bottom: 0.5rem;
+}

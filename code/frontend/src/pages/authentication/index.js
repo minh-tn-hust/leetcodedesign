@@ -2,10 +2,20 @@ import Image from "next/image";
 import ASSET from "@/shared/assets";
 import SignInForm from "@/pages/authentication/components/SignInForm";
 import SignUpForm from "@/pages/authentication/components/SignUpForm";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {useDispatch} from "react-redux";
+import {changeToAuthenPage} from "@/reducers/appRoutes/appRoutesReducer";
+import {useRouter} from "next/router";
 
 
 export default function AuthenticationScreen() {
+    const dispatch = useDispatch();
+    const router = useRouter();
+
+    useEffect(() => {
+        dispatch(changeToAuthenPage());
+    }, [])
+
     const STATE = {
         SIGN_IN: "sign_in",
         FORGOT_PASSWORD: "forgot_password",

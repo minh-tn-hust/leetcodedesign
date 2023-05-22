@@ -2,12 +2,12 @@ import {Box, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Sele
 import UnpublishedIcon from '@mui/icons-material/Unpublished';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import {useState} from "react";
-import {HardLevelEnum, ProblemStatusEnum} from "@/constants/problemStatus";
+import {HARD_LEVEL, PROBLEM_STATUS} from "@/constants/problemStatus";
 
 export default function ProblemFilter(props) {
     const [filterConfig, setFilterConfig] = useState({
-        hardLevel: HardLevelEnum.ALL,
-        status: ProblemStatusEnum.ALL,
+        hardLevel: HARD_LEVEL.ALL,
+        status: PROBLEM_STATUS.ALL,
         isShowTag : false
     })
 
@@ -50,10 +50,10 @@ export default function ProblemFilter(props) {
                     label="Hard level"
                     onChange={(event) => {onChangeHardLevel(event.target.value)}}
                 >
-                    <MenuItem value={HardLevelEnum.EASY}>Easy</MenuItem>
-                    <MenuItem value={HardLevelEnum.MEDIUM}>Medium</MenuItem>
-                    <MenuItem value={HardLevelEnum.HARD}>Hard</MenuItem>
-                    <MenuItem value={HardLevelEnum.ALL}>All</MenuItem>
+                    <MenuItem value={HARD_LEVEL.EASY}>Easy</MenuItem>
+                    <MenuItem value={HARD_LEVEL.MEDIUM}>Medium</MenuItem>
+                    <MenuItem value={HARD_LEVEL.HARD}>Hard</MenuItem>
+                    <MenuItem value={HARD_LEVEL.ALL}>All</MenuItem>
                 </Select>
             </FormControl>
             <FormControl className={"w-[150px] ml-3"}>
@@ -66,9 +66,9 @@ export default function ProblemFilter(props) {
                     label="Status"
                     onChange={(event) => {onChangeStatus(event.target.value)}}
                 >
-                    <MenuItem value={ProblemStatusEnum.UNSOLVED}> Unsolved </MenuItem>
-                    <MenuItem value={ProblemStatusEnum.SOLVED}> Solved </MenuItem>
-                    <MenuItem value={ProblemStatusEnum.ALL}> All </MenuItem>
+                    <MenuItem value={PROBLEM_STATUS.UNSOLVED}> Unsolved </MenuItem>
+                    <MenuItem value={PROBLEM_STATUS.SOLVED}> Solved </MenuItem>
+                    <MenuItem value={PROBLEM_STATUS.ALL}> All </MenuItem>
                 </Select>
             </FormControl>
             <div className={"flex-1"}></div>

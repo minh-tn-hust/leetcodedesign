@@ -9,10 +9,13 @@ import {changeToListProblem} from "@/reducers/appRoutes/appRoutesReducer";
 
 export default function ProblemScreen(props) {
     const listProblem = useSelector(problemListSelector);
+
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(changeToListProblem());
     }, [])
+
     return(
         <main className={"w-full flex flex-row justify-center px-2"}>
             <div className={"w-[1152px] h-screen grid grid-cols-4 gap-4 pt-3"}>

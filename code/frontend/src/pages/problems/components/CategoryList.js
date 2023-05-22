@@ -3,7 +3,7 @@ import {CategoryKey, ProblemCategory} from "@/constants/category";
 import {useState} from "react";
 import ExpandIcon from '@mui/icons-material/Expand';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
-import {HardLevelEnum, ProblemStatusEnum} from "@/constants/problemStatus";
+import {HARD_LEVEL, PROBLEM_STATUS} from "@/constants/problemStatus";
 
 function CategoryMember({cateKey, onChooseCategory, isChoosing, number, ...props}) {
     const handleChooseCategory = function () {

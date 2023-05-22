@@ -1,10 +1,10 @@
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import RemoveDoneIcon from '@mui/icons-material/RemoveDone';
-import {ProblemStatusEnum} from "@/constants/problemStatus";
+import {PROBLEM_STATUS} from "@/constants/problemStatus";
 import {red} from "@mui/material/colors";
 import {useEffect, useState} from "react";
 /**
- * @param {ProblemStatusEnum} content
+ * @param {PROBLEM_STATUS} content
  * @param props
  * @returns {JSX.Element}
  * @constructor
@@ -18,20 +18,20 @@ export default function Status({status, ...props}) {
 
     function getDisplayContent() {
         switch (status) {
-            case ProblemStatusEnum.NONE:
+            case PROBLEM_STATUS.NONE:
                 return "";
 
-            case ProblemStatusEnum.HEADER:
+            case PROBLEM_STATUS.HEADER:
                 return (
                     <div className={"font-semibold"}>Status</div>
                 );
 
-            case ProblemStatusEnum.SOLVED:
+            case PROBLEM_STATUS.SOLVED:
                 return (
                     <DoneAllIcon color={"success"}/>
                 );
 
-            case ProblemStatusEnum.UNSOLVED:
+            case PROBLEM_STATUS.UNSOLVED:
                 return (
                     <RemoveDoneIcon sx={{color : red[500]}}/>
                 );

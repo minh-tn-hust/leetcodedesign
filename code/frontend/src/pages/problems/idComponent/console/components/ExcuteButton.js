@@ -2,14 +2,15 @@ import {useEffect, useState} from "react";
 
 export const BUTTON_TYPE = {
     RUN : "run",
-    SUBMIT : "submit"
+    SUBMIT : "submit",
+    CREATE : "create"
 }
 
-export default function ExecuteButton({type, handleRunClick, ...props}) {
+export default function ExecuteButton({type, handleRunClick, title,...props}) {
     const [buttonStyle, setButtonStyle] = useState("");
 
     useEffect(() => {
-        if (type === BUTTON_TYPE.SUBMIT) {
+        if (type === BUTTON_TYPE.CREATE || type === BUTTON_TYPE.SUBMIT) {
             setButtonStyle("text-white bg-[#2Db55D]")
         } else {
             setButtonStyle("text-[#835A59] bg-[#F2F3F4]")
@@ -30,7 +31,11 @@ export default function ExecuteButton({type, handleRunClick, ...props}) {
             onClick={onClick}
         >
             {
-                (type === BUTTON_TYPE.SUBMIT) ? "Submit" : "Run"
+                (type === BUTTON_TYPE.SUBMIT)
+                    ? "Submit"
+                    : (type === BUTTON_TYPE.RUN)
+                        ? "Run"
+                        : title
             }
         </button>
     )

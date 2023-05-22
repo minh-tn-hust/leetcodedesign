@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(changeToHomePage);
+        dispatch(changeToHomePage());
     }, [])
 
   return (

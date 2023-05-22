@@ -1,15 +1,15 @@
 import Difficulty from "@/pages/problems/components/ProblemList/Difficulty";
 import Status from "@/pages/problems/components/ProblemList/Status";
 import Title from "@/pages/problems/components/ProblemList/Title";
-import {HardLevelEnum, ProblemStatusEnum} from "@/constants/problemStatus";
+import {HARD_LEVEL, PROBLEM_STATUS} from "@/constants/problemStatus";
 
 
 function ProblemListHeader(props) {
     return (
         <div className={"w-full h-[40px] bg-blue-300 flex flex-row even:bg-[#F7F8FA] odd:bg-white"}>
-            <Status status={ProblemStatusEnum.HEADER}/>
-            <Title title={ProblemStatusEnum.HEADER}/>
-            <Difficulty hardLevel={ProblemStatusEnum.HEADER}/>
+            <Status status={PROBLEM_STATUS.HEADER}/>
+            <Title title={PROBLEM_STATUS.HEADER}/>
+            <Difficulty hardLevel={PROBLEM_STATUS.HEADER}/>
         </div>
     )
 };

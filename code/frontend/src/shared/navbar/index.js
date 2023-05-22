@@ -3,6 +3,7 @@ import ASSET from "@/shared/assets";
 import {useState} from "react";
 import NavBarLink from "@/shared/navbar/components/NavBarLink";
 import {
+    changeToAuthenPage,
     changeToHomePage,
     changeToListProblem,
     changeToProblemPage,
@@ -10,10 +11,13 @@ import {
 } from "@/reducers/appRoutes/appRoutesReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {currentRoutes} from "@/reducers/appRoutes/appRoutesSelector";
+import {currentRole} from "@/reducers/authentication/authenticationSelector";
+import {AUTHEN_ROLE} from "@/reducers/authentication/authenticationReducer";
 
 export default function NavBar(props) {
-    const page = useSelector(currentRoutes)
-    const dispatch = useDispatch()
+    const page = useSelector(currentRoutes);
+    const role = useSelector(currentRole);
+    const dispatch = useDispatch();
 
     const handleChangePage = function (toPage) {
         console.log(toPage);
@@ -21,19 +25,33 @@ export default function NavBar(props) {
             case ROUTES.HOME_PAGE:
                 dispatch(changeToHomePage);
                 break;
+
             case ROUTES.LIST_PROBLEM:
                 dispatch(changeToListProblem);
                 break;
+
             case ROUTES.DOING:
                 dispatch(changeToProblemPage);
                 break;
+
+            case ROUTES.AUTHEN:
+                dispatch(changeToAuthenPage);
+                break;
+
+            default:
+                console.error("Unknown route: " + toPage);
         }
     }
 
     const routes = [
         {href: "/", title: "Homepage", enum: ROUTES.HOME_PAGE},
         {href: "/problems", title: "Problems", enum: ROUTES.LIST_PROBLEM},
+        {href: "/authentication", title: "Sign In", enum: ROUTES.AUTHEN},
+        {href: "/admin", title: "Admin", enum: ROUTES.ADMIN}
     ]
+
+    const loginPage = routes[2];
+    const adminPage = routes[3];
 
     return (
         <div className={"w-full flex flex-row justify-center drop-shadow-md bg-white"}>
@@ -48,6 +66,9 @@ export default function NavBar(props) {
                     </Link>
                     {
                         routes.map((route, index) => {
+                            if (index > 1) {
+                                return;
+                            }
                             return (<NavBarLink
                                 key={"NavBarLink" + index}
                                 href={route.href}
@@ -57,12 +78,22 @@ export default function NavBar(props) {
                             />)
                         })
                     }
+                    {
+                        (role === AUTHEN_ROLE.ADMIN || page === adminPage.enum) ?
+                        <NavBarLink
+                            key={"NavBarLink_ADMIN"}
+                            href={adminPage.href}
+                            title={adminPage.title}
+                            isSelected={page === adminPage.enum}
+                            handleChangePage={() => handleChangePage(adminPage.enum)}
+                        /> : <></>
+                    }
                 </div>
                 <NavBarLink
-                    href={"/authentication"}
-                    title={"Sign In"}
-                    isSelected={false}
-                    handleChangePage={() => handleChangePage(-1)}
+                    href={loginPage.href}
+                    title={loginPage.title}
+                    isSelected={page === loginPage.enum}
+                    handleChangePage={() => handleChangePage(loginPage.enum)}
                 />
             </div>
         </div>
