@@ -1,21 +1,22 @@
-version: '3.3'
+version: '3.8'
 services:
-  kong:
+  kong-dbless:
+    build: .
     container_name: kong-dbless
     network_mode: kong-net
     volumes:
-      - '.:/kong/declarative/'
+      - ./kong-config:/kong-config
     environment:
       - KONG_DATABASE=off
-      - KONG_DECLARATIVE_CONFIG=/kong/declarative/kong.yml
+      - KONG_DECLARATIVE_CONFIG=/kong-config/kong.yml
       - KONG_PROXY_ACCESS_LOG=/dev/stdout
       - KONG_ADMIN_ACCESS_LOG=/dev/stdout
       - KONG_PROXY_ERROR_LOG=/dev/stderr
       - KONG_ADMIN_ERROR_LOG=/dev/stderr
-      - 'KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl'
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001,0.0.0.0:8444 ssl
+      - KONG_PLUGINS=bundled,custom-authen
     ports:
-      - '8000:8000'
-      - '8443:8443'
-      - '127.0.0.1:8001:8001'
-      - '127.0.0.1:8444:8444'
-    image: 'kong:3.3.3'
+      - 8000:8000
+      - 8443:8443
+      - 8001:8001
+      - 8444:8444

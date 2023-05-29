@@ -1,0 +1,22 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  - host: mockbin.org
+    name: example_service
+    port: 80
+    protocol: http
+    routes:
+      - name: example_route
+        paths:
+          - /mock
+        strip_path: true
+plugins:
+ - config:
+     introspection_endpoint : "http://localhost:8000"
+     authorization_endpoint : "http://localhost:8000"
+     token_header : "Authorization"
+   enabled: true
+   name: custom-authen
+
+
