@@ -1,5 +1,4 @@
 import ReactMarkdown from "react-markdown";
-import RemarkMathPlugin from "remark-math";
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
@@ -24,11 +23,10 @@ export default function ReactMarkdownRender({markdownSource, ...pros})
                     return !inline && match ? (
                         <SyntaxHighlighter
                             {...props}
-                            children={String(children).replace(/\n$/, '')}
                             style={vs}
                             language={match[1]}
                             PreTag="div"
-                        />
+                        >{String(children).replace(/\n$/, '')}</SyntaxHighlighter>
                     ) : (
                         <code {...props} className={className}>
                             {children}

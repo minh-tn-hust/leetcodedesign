@@ -1,7 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
-    const Problem = sequelize.define("problems", {
+    const Problem = sequelize.define("problem", {
         problemName: {
             type: Sequelize.TEXT
+        },
+        hardLevel : {
+            type: Sequelize.ENUM,
+            values: ["easy", "medium", "hard"]
         },
         description: {
             type: Sequelize.TEXT
@@ -21,7 +25,6 @@ module.exports = (sequelize, Sequelize) => {
         ownerId : {
             type : Sequelize.INTEGER
         }
-
     });
 
     return Problem;

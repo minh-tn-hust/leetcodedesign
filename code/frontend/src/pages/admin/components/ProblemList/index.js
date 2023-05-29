@@ -1,8 +1,10 @@
+import Link from "next/link";
+
 function ProblemSlot({title, problemId, owner,props}) {
     const href = "admin/" + problemId
     return (
         <div className={"w-full flex flex-row items-center border border-1 h-10 odd:bg-[#F8F9Fa] even:bg-white"}>
-            <a href={href} className={"flex-1 pl-3 hover:text-blue-500 hover:font-semibold"}>{title}</a>
+            <Link href={href} className={"flex-1 pl-3 hover:text-blue-500 hover:font-semibold"}>{title}</Link>
             <div className={"flex-1"}>{owner}</div>
         </div>
     );

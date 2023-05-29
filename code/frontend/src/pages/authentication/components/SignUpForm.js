@@ -2,12 +2,16 @@ import {useForm} from "react-hook-form";
 import {Button, TextField, useControlled} from "@mui/material";
 import * as Yup from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup";
+import {useDispatch} from "react-redux";
+import {signUp} from "@/reducers/authentication/authenticationThunk";
 
 export default function SignUpForm({onSignIn, ...props}) {
+    const dispatch = useDispatch();
+
     const loginSchema = Yup.object().shape({
         username : Yup.string()
             .required("Username bắt buộc")
-            .matches( /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){8,18}[a-zA-Z0-9]$/, "User không hợp lệ, Username bao gồm 8 đến 18 kí tự, số, chữ cái hoa, chữ cái thường"),
+            .matches( /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){7,18}[a-zA-Z0-9]$/, "User không hợp lệ, Username bao gồm 7 đến 18 kí tự, số, chữ cái hoa, chữ cái thường"),
         password : Yup.string()
             .required("Password bắt buộc")
             .matches( /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, "Password phải bao gồm kí tự hoa, kí tự thường, và số và tối thiểu 8 kí tự"),
@@ -55,8 +59,7 @@ export default function SignUpForm({onSignIn, ...props}) {
     }
 
     const onSubmitSignUpForm = function(formValue) {
-        // TODO: Thực hiện gọi API để đăng nhập
-
+        dispatch(signUp(formValue));
     }
 
     return (

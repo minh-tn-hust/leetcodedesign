@@ -11,7 +11,7 @@ import {useEffect, useState} from "react";
 
 function MarkdownPreview({mardownSource, ...props}) {
     return (
-        <div className={"flex-1 border overflow-y-scroll"}>
+        <div className={"w-full h-full"}>
             <ReactMarkdownRender markdownSource={mardownSource}/>
         </div>
     )
@@ -51,7 +51,7 @@ export default function MarkdownEditor({title, value, onChange, editorClass,...p
             </div>
             <div className={editorClasses}>
                 <AceEditor
-                    className={"flex-1"}
+                    className={"flex-1 border"}
                     placeholder="Insert your description here"
                     mode={"markdown"}
                     theme="textmate"
@@ -71,9 +71,12 @@ export default function MarkdownEditor({title, value, onChange, editorClass,...p
                         showLineNumbers: true,
                         tabSize: 2,
                     }}/>
-                {
-                    isShowPreview ? <MarkdownPreview mardownSource={value}/> : <></>
-                }
+                    {
+                        isShowPreview ?
+                            <div className={"px-2 h-full flex-1 overflow-y-scroll border"}>
+                                <MarkdownPreview mardownSource={value}/>
+                            </div> : <></>
+                    }
 
             </div>
             <div/>

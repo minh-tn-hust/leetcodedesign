@@ -1,18 +1,7 @@
 const config = require("../configs/db.config")
 
+// Config Sequelize
 const Sequelize = require("sequelize");
-
-let newConfig = {
-    host : config.HOST,
-    dialect : config.dialect,
-    operatorsAliases: false,
-    pool: {
-        max: config.pool.max,
-        min: config.pool.min,
-        acquire: config.pool.acquire,
-        idle: config.pool.idle
-    }
-}
 
 const sequelize = new Sequelize(
     config.DB,
@@ -31,26 +20,46 @@ const sequelize = new Sequelize(
     }
 )
 
+// End config sequelize
+
 const db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.user = require('../models/user.model')(sequelize, Sequelize);
-db.role = require('../models/role.model')(sequelize, Sequelize);
+// Config relationship between table
+db.problem = require('./problem.model')(sequelize, Sequelize);
+db.testcase = require('./testcase.model')(sequelize, Sequelize);
+db.category = require('./category.model')(sequelize, Sequelize);
+db.languageSupport = require('./languageSupport.model')(sequelize, Sequelize);
+db.uploadTestcaseFile = require('./testcaseFile.model')(sequelize, Sequelize);
 
-db.role.belongsToMany(db.user, {
-    through: "user_roles",
-    foreignKey: "roleId",
-    otherKey: "userId"
+// 1 category ~ n problem
+db.category.belongsToMany(db.problem, {
+    through: "problem_categories",
+    foreignKey: "categoryId",
+    otherKey: "problemId"
 });
 
-db.user.belongsToMany(db.role, {
-    through: "user_roles",
-    foreignKey: "userId",
-    otherKey: "roleId"
-})
+// 1 problem ~ n category
+db.problem.belongsToMany(db.category, {
+    through: "problem_categories",
+    foreignKey: "problemId",
+    otherKey: "categoryId"
+});
 
-db.ROLES = ["user", "admin"]
+// 1 problem ~ n test case
+db.problem.hasMany(db.testcase, {
+    foreignKey: "problemId",
+});
+
+// 1 problem ~ n language support
+db.problem.hasMany(db.languageSupport, {
+    foreignKey: "problemId"
+});
+
+db.testcase.hasMany(db.uploadTestcaseFile, {
+    foreignKey: "testcaseId"
+})
 
 module.exports = db;

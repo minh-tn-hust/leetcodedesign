@@ -3,14 +3,22 @@ import ASSET from "@/shared/assets";
 import SignInForm from "@/pages/authentication/components/SignInForm";
 import SignUpForm from "@/pages/authentication/components/SignUpForm";
 import {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {changeToAuthenPage} from "@/reducers/appRoutes/appRoutesReducer";
 import {useRouter} from "next/router";
+import {Alert, Snackbar} from "@mui/material";
+import {getAuthenRole, getFailMessage, getSuccessMessage} from "@/reducers/authentication/authenticationSelector";
+import {resetMessage} from "@/reducers/authentication/authenticationReducer";
+import {ROLE} from "@/constants/role";
 
 
 export default function AuthenticationScreen() {
     const dispatch = useDispatch();
     const router = useRouter();
+
+    const handleLoginSuccess = function() {
+        router.push("/problems");
+    }
 
     useEffect(() => {
         dispatch(changeToAuthenPage());
@@ -40,6 +48,46 @@ export default function AuthenticationScreen() {
         changeFormType(STATE.SIGN_IN);
     }
 
+    // For Snackbar
+    const [open, setOpen] = useState(false);
+
+    const authenFailMessage = useSelector(getFailMessage);
+    const authenSuccessMessage = useSelector(getSuccessMessage);
+    const role = useSelector(getAuthenRole);
+
+    useEffect(() => {
+        if (authenState === STATE.SIGN_IN) {
+            if (authenFailMessage !== "") {
+                handleShowSnakeBar();
+            } else {
+                if (role != ROLE.NON_AUTHORIZE) {
+                    handleLoginSuccess();
+                }
+            }
+        } else {
+            if (authenFailMessage !== "" || authenSuccessMessage !== "") {
+                handleShowSnakeBar();
+                if (authenSuccessMessage !== "") {
+                    handleSignIn();
+                }
+            }
+        }
+    }, [authenSuccessMessage, authenFailMessage, role])
+
+
+    const handleShowSnakeBar = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+        dispatch(resetMessage())
+    };
+
     return (
         <>
             <main>
@@ -61,6 +109,27 @@ export default function AuthenticationScreen() {
                         }
                     </div>
                 </div>
+                {
+                    authenFailMessage
+                }
+                {
+                    authenSuccessMessage
+                }
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    {
+                        authenFailMessage !== ""
+                            ? <Alert onClose={handleClose} severity="warning" sx={{width: '100%'}}>
+                                {authenFailMessage}
+                            </Alert>
+                            : authenSuccessMessage !== ""
+                                ? <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
+                                    {authenSuccessMessage}
+                                </Alert>
+                                : <Alert onClose={handleClose} severity="success" sx={{width: '100%', display:'none'}}>
+                                    {authenSuccessMessage}
+                                </Alert>
+                    }
+                </Snackbar>
             </main>
         </>
     )

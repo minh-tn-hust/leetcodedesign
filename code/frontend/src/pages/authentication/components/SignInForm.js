@@ -2,15 +2,18 @@ import {useForm} from "react-hook-form";
 import {Button, TextField, useControlled} from "@mui/material";
 import * as Yup from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup";
+import {useDispatch} from "react-redux";
+import {signIn} from "@/reducers/authentication/authenticationThunk";
 
 export default function SignInForm({onSignUp, onForgotPassword, ...props}) {
+    const dispatch = useDispatch();
     const loginSchema = Yup.object().shape({
         username : Yup.string()
             .required("Email is required")
-            .matches( /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Email không hợp lệ, vui lòng thử lại email"),
-        password : Yup.string()
+            // .matches( /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/, "Username không hợp lệ, vui lòng thử lại username"),
+        ,password : Yup.string()
             .required("Password is required")
-            .matches( /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, "Password phải bao gồm kí tự hoa, kí tự thường, và số và tối thiểu 8 kí tự")
+            // .matches( /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, "Password phải bao gồm kí tự hoa, kí tự thường, và số và tối thiểu 8 kí tự")
     })
 
     const {
@@ -38,10 +41,11 @@ export default function SignInForm({onSignUp, onForgotPassword, ...props}) {
 
     const onSubmitSignInForm = function(formValue) {
         // TODO: Thực hiện gọi API để đăng nhập
+        dispatch(signIn(formValue));
 
         // Hai hàm dưới đây để handle error trả về từ server
-        setEmailError("Wrong");
-        setPasswordError("True");
+        // setEmailError("Wrong");
+        // setPasswordError("True");
     }
 
     console.log("Error", errors);

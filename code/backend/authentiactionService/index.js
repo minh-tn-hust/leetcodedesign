@@ -4,14 +4,9 @@ require('dotenv').config();
 
 const app = express();
 
-var corsOptions = {
-    origin: "http://localhost:8081"
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
+app.use(express.urlencoded({extended: true}));
 
 
 const PORT = process.env.PORT || 8080;
@@ -21,7 +16,7 @@ app.listen(PORT, () => {
 
 // ROUTES
 app.get("/", (req, res) => {
-    res.json({ message: "Welcome to minhtn3 authentication server" });
+    res.json({message: "Welcome to minhtn3 authentication server"});
 });
 require('./src/routes/auth.routes')(app);
 
@@ -38,16 +33,16 @@ function initial() {
 
     Role.create({
         id: 2,
-        name: "moderator"
-    });
-
-    Role.create({
-        id: 3,
         name: "admin"
     });
 }
 
-db.sequelize.sync({force : true}).then(() => {
-    console.log('Drop and Resync Db');
-    initial();
-})
+console.log('Delay 10s before connect to DB');
+setTimeout(function() {
+    db.sequelize.sync({force: true}).then(() => {
+        console.log('Drop and Resync Db');
+        initial();
+    }).catch((error) => {
+        console.log(error);
+    })
+}, 10000)

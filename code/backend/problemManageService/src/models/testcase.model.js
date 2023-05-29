@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Testcase = sequelize.define("testcases", {
+    const Testcase = sequelize.define("testcase", {
         explanation: {
             type: Sequelize.TEXT
         },
@@ -7,10 +7,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN
         },
         inp: {
-            type: Sequelize.BLOB('long')
+            type: Sequelize.TEXT
         },
         out: {
-            type: Sequelize.BLOB('long')
+            type: Sequelize.TEXT
         },
         ownerId : {
             type: Sequelize.INTEGER

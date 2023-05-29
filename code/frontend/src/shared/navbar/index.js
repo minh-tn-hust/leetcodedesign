@@ -1,6 +1,5 @@
 import Link from "next/link";
 import ASSET from "@/shared/assets";
-import {useState} from "react";
 import NavBarLink from "@/shared/navbar/components/NavBarLink";
 import {
     changeToAuthenPage,
@@ -11,13 +10,35 @@ import {
 } from "@/reducers/appRoutes/appRoutesReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {currentRoutes} from "@/reducers/appRoutes/appRoutesSelector";
-import {currentRole} from "@/reducers/authentication/authenticationSelector";
-import {AUTHEN_ROLE} from "@/reducers/authentication/authenticationReducer";
+import {currentRole, getAuthenRole, getUsername} from "@/reducers/authentication/authenticationSelector";
+import {ROLE} from "@/constants/role";
 
 export default function NavBar(props) {
     const page = useSelector(currentRoutes);
     const role = useSelector(currentRole);
+    const username = useSelector(getUsername);
+    const authenState = useSelector(getAuthenRole);
     const dispatch = useDispatch();
+
+    const displayWithAuthenState = function() {
+        if (authenState === ROLE.NON_AUTHORIZE) {
+            return <NavBarLink
+                href={loginPage.href}
+                title={loginPage.title}
+                isSelected={page === loginPage.enum}
+                handleChangePage={() => handleChangePage(loginPage.enum)}
+            />
+        } else {
+            const display = <div>Welcome, <b>{username}</b></div>
+            return <NavBarLink
+                href={"#"}
+                title={display}
+                isSelected={false}
+                handleChangePage={() => {}}
+            />
+        }
+
+    }
 
     const handleChangePage = function (toPage) {
         console.log(toPage);
@@ -79,7 +100,7 @@ export default function NavBar(props) {
                         })
                     }
                     {
-                        (role === AUTHEN_ROLE.ADMIN || page === adminPage.enum) ?
+                        (role === ROLE.ADMIN || page === adminPage.enum) ?
                         <NavBarLink
                             key={"NavBarLink_ADMIN"}
                             href={adminPage.href}
@@ -89,12 +110,9 @@ export default function NavBar(props) {
                         /> : <></>
                     }
                 </div>
-                <NavBarLink
-                    href={loginPage.href}
-                    title={loginPage.title}
-                    isSelected={page === loginPage.enum}
-                    handleChangePage={() => handleChangePage(loginPage.enum)}
-                />
+                {
+                    displayWithAuthenState()
+                }
             </div>
         </div>
     );

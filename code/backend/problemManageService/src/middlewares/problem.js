@@ -5,7 +5,7 @@ checkNullFields = (req, res, next) => {
         'statement',
         'input',
         'output',
-        'constraint'
+        'hardLevel'
     ];
     const missingFields = [];
 
@@ -17,7 +17,8 @@ checkNullFields = (req, res, next) => {
 
     if (missingFields.length > 0) {
         res.status(400).json({
-            message: `Missing required fields: ${missingFields.join(', ')}`,
+            listFields : missingFields,
+            message: `Missing required fields`
         });
     } else {
         next();
