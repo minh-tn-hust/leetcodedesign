@@ -23,6 +23,26 @@ verifyToken = (req, res, next) => {
     });
 };
 
+getAllAuthenInfo = async (req, res, next) => {
+    console.log(req.userId);
+    let user = await User.findByPk(req.userId);
+    if (!user) {
+        return res.status(404).send({
+            message: "Can't verify this user in system"
+        });
+    }
+
+    let roles = await user.getRoles();
+    let userRoles = [];
+    for (let role of roles) {
+        userRoles.push(role.name);
+    }
+
+    req.userId = user.id;
+    req.roles = userRoles;
+    next();
+};
+
 isAdmin = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
         user.getRoles().then(roles => {
@@ -44,5 +64,6 @@ isAdmin = (req, res, next) => {
 const authJwt = {
     verifyToken: verifyToken,
     isAdmin: isAdmin,
+    getAllAuthenInfo: getAllAuthenInfo
 };
 module.exports = authJwt;

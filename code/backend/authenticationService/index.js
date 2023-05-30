@@ -1,13 +1,20 @@
 const express = require("express");
 const cors = require("cors");
+var morgan = require('morgan')
+
 require('dotenv').config();
 
+
+
 const app = express();
+
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+// Middleware for logging request
+app.use(morgan('combined'))
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
@@ -33,6 +40,11 @@ function initial() {
 
     Role.create({
         id: 2,
+        name: "mod"
+    });
+
+    Role.create({
+        id: 3,
         name: "admin"
     });
 }
@@ -45,4 +57,4 @@ setTimeout(function() {
     }).catch((error) => {
         console.log(error);
     })
-}, 10000)
+}, 100)

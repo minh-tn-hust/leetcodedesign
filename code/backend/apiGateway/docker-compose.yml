@@ -1,8 +1,14 @@
 version: '3.8'
+
+networks:
+  kong-net:
+    name: kong-net
+    driver: bridge
+
 services:
-  kong-dbless:
+  kong-gate-way:
     build: .
-    container_name: kong-dbless
+    container_name: kong-gate-way
     network_mode: kong-net
     volumes:
       - ./kong-config:/kong-config

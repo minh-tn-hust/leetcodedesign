@@ -1,5 +1,6 @@
 local http = require "resty.http"
 local utils = require "kong.tools.utils"
+local cjson = require "cjson"
 
 local TokenHandler = {
     VERSION = "1.0",
@@ -12,51 +13,50 @@ local function introspect_access_token(conf, access_token, customer_id)
 
     -- step 1: validate the token
     local res, err = httpc:request_uri(conf.introspection_endpoint, {
-        method = "POST",
+        method = "GET",
         ssl_verify = false,
         headers = {
             ["Content-Type"] = "application/x-www-form-urlencoded",
-            ["Authorization"] = "Bearer " .. access_token }
+            [conf.token_header] = access_token }
     })
 
     if not res then
         kong.log.err("failed to call introspection endpoint: ",err)
         return kong.response.exit(500)
     end
+
     if res.status ~= 200 then
         kong.log.err("introspection endpoint responded with status: ",res.status)
         return kong.response.exit(500)
     end
 
-    -- step 2: validate the customer access rights
-    local res, _ = httpc:request_uri(conf.authorization_endpoint, {
-        method = "POST",
-        ssl_verify = false,
-        body = '{ "custId":"' .. customer_id .. '"}',
-        headers = { ["Content-Type"] = "application/json",
-                    ["Authorization"] = "Bearer " .. access_token }
-    })
+    local response_json = cjson.decode(res.body)
 
-    if not res then
-        kong.log.err("failed to call authorization endpoint: ",err)
-        return kong.response.exit(500)
-    end
-    if res.status ~= 200 then
-        kong.log.err("authorization endpoint responded with status: ",res.status)
-        return kong.response.exit(500)
-    end
+    kong.log.err("response body: " .. response_json)
+
+
 
     return true -- all is well
 end
 
 function TokenHandler:access(conf)
+    local request_path = kong.request.get_path()
+    kong.log.err("request path: ", request_path)
+
+    -- Kiểm tra nếu request_path chứa "signin" hoặc "signup"
+    if request_path:find("signin") or request_path:find("signup") or request_path == "/auth" then
+        -- Thực hiện xác nhận gói tin authen thành công
+        kong.log.err("Authen package confirmed")
+        return -- Kết thúc xử lý plugin
+    end
+
     local access_token = kong.request.get_headers()[conf.token_header]
     if not access_token then
         kong.response.exit(401)  --unauthorized
     end
-    -- replace Bearer prefix
-    access_token = access_token:sub(8,-1) -- drop "Bearer "
-    local request_path = kong.request.get_path()
+
+    kong.log.err("have authrization header");
+
     local values = utils.split(request_path, "")
     local customer_id = values[3]
 

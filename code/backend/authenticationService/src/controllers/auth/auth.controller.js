@@ -1,5 +1,5 @@
-const db = require("../models");
-const config = require("../configs/auth.config");
+const db = require("../../models");
+const config = require("../../configs/auth.config");
 const User = db.user;
 const Role = db.role;
 
@@ -15,23 +15,9 @@ exports.signUp = (req, res) => {
         password: bcrypt.hashSync(req.body.password, 8)
     })
         .then(user => {
-            if (req.body.roles) {
-                Role.findAll({
-                    where: {
-                        name: {
-                            [Op.or]: req.body.roles
-                        }
-                    }
-                }).then(roles => {
-                    user.setRoles(roles).then(() => {
-                        res.send({ message: "User was registered successfully!" });
-                    });
-                });
-            } else {
-                user.setRoles([1]).then(() => {
-                    res.send({ message: "User was registered successfully!" });
-                });
-            }
+            user.setRoles([1]).then(() => {
+                res.send({ message: "User was registered successfully!" });
+            });
         })
         .catch(err => {
             res.status(500).send({ message: err.message });
@@ -83,3 +69,42 @@ exports.signIn = (req, res) => {
             res.status(500).send({ message: err.message });
         });
 };
+
+exports.signUpForAdmin = (req, res) => {
+    User.create({
+        username: req.body.username,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 8)
+    })
+        .then(user => {
+            if (req.body.roles) {
+                Role.findAll({
+                    where: {
+                        name: {
+                            [Op.or]: req.body.roles
+                        }
+                    }
+                }).then(roles => {
+                    user.setRoles(roles).then(() => {
+                        res.send({ message: "User was registered successfully!" });
+                    });
+                });
+            } else {
+                user.setRoles([1]).then(() => {
+                    res.send({ message: "User was registered successfully!" });
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({ message: err.message });
+        });
+};
+
+exports.inspectatorUser = (req, res) => {
+    let userId = req.userId;
+    let requestRoles = req.roles
+    res.status(200).send({
+        userId : userId,
+        roles : requestRoles
+    })
+}
