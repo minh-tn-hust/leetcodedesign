@@ -31,8 +31,10 @@ require('./src/routes/auth.routes')(app);
 // DB CONNECT
 const db = require("./src/models");
 const Role = db.role;
+const User = db.user;
 
-function initial() {
+
+async function initial() {
     Role.create({
         id: 1,
         name: "user"
@@ -47,9 +49,15 @@ function initial() {
         id: 3,
         name: "admin"
     });
+    let user = await User.create({
+        username : "admin",
+        password : "$2a$08$VFOrclKrfAdSf0/1YcygaO/zNGzTgucUMwxIyyfPTy3j8XFQZDmUu",
+        email : "admin@gmail.com"
+    })
+    user.setRoles([1,2,3]);
 }
 
-console.log('Delay 10s before connect to DB');
+console.log('Delay 20000ms before connect to DB');
 setTimeout(function() {
     db.sequelize.sync({force: true}).then(() => {
         console.log('Drop and Resync Db');
@@ -57,4 +65,4 @@ setTimeout(function() {
     }).catch((error) => {
         console.log(error);
     })
-}, 100)
+}, 20000)

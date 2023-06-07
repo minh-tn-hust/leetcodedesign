@@ -102,9 +102,9 @@ exports.signUpForAdmin = (req, res) => {
 
 exports.inspectatorUser = (req, res) => {
     let userId = req.userId;
-    let requestRoles = req.roles
+    let requestRoles = req.authenedRoles
     res.status(200).send({
         userId : userId,
-        roles : requestRoles
+        authenedRoles : requestRoles
     })
 }

@@ -1,0 +1,25 @@
+@startuml
+title Chấm bài khi người dùng thực hiện submit
+
+|Người dùng|
+start
+:Người dùng nhập ID đề thi;
+:Người dùng nhập source code;
+|Hệ thống|
+:Validate code;
+if (Code hợp lệ?) then (yes)
+  :Kiểm tra số lượng máy chấm ảo đang hoạt động;
+  if (Có máy chấm ảo rảnh?) then (yes)
+    :Chọn máy chấm ảo;
+    :Thực thi code trên máy chấm ảo;
+    :Ghi nhận kết quả thực thi code;
+  else (no)
+    :Đưa vào hàng chờ;
+  endif
+else (no)
+  :Báo lỗi;
+endif
+|Người dùng|
+:Hiển thị kết quả chấm bài;
+stop
+@enduml

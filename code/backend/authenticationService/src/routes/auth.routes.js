@@ -24,7 +24,7 @@ module.exports = function(app) {
 
             verifySignUp.checkDuplicateUsernameOrEmail,
             verifySignUp.checkRolesExisted,
-            authJwt.verifyToken,
+            authJwt.getAuthInfoFromGateway,
             authJwt.isAdmin
         ],
         controller.signUpForAdmin

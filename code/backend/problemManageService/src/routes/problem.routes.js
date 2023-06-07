@@ -12,12 +12,17 @@ module.exports = function(app) {
 
     app.post(
         "/api/problem/create",
+        middleware.auth.getAuthInfoFromGateway,
+        middleware.auth.isAdminOrMod,
         middleware.problem.checkNullFields,
         controller.addProblem
     );
 
     app.post(
         "/api/problem/edit",
+        middleware.auth.getAuthInfoFromGateway,
+        middleware.auth.isAdminOrMod,
+        middleware.problem.checkNullFields,
         controller.editProblem
     );
 

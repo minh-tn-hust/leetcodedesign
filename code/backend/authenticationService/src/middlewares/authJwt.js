@@ -39,11 +39,12 @@ getAllAuthenInfo = async (req, res, next) => {
     }
 
     req.userId = user.id;
-    req.roles = userRoles;
+    req.authenedRoles = userRoles;
     next();
 };
 
 isAdmin = (req, res, next) => {
+    console.log("request user id = " + req.userId);
     User.findByPk(req.userId).then(user => {
         user.getRoles().then(roles => {
             for (let i = 0; i < roles.length; i++) {
@@ -61,9 +62,25 @@ isAdmin = (req, res, next) => {
     });
 };
 
+getAuthInfoFromGateway = (req, res, next) => {
+    let infoHeader = req.headers["x-authen-info"];
+
+    if (!infoHeader) {
+        res.status(404).send({
+            message: "Unauthized"
+        })
+    }
+
+    let info = JSON.parse(JSON.parse(infoHeader));
+    req.userId = info.userId;
+    req.authenedRoles = info.authenedRoles;
+    next();
+};
+
 const authJwt = {
     verifyToken: verifyToken,
     isAdmin: isAdmin,
-    getAllAuthenInfo: getAllAuthenInfo
+    getAllAuthenInfo: getAllAuthenInfo,
+    getAuthInfoFromGateway : getAuthInfoFromGateway
 };
 module.exports = authJwt;

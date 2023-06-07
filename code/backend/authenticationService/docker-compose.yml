@@ -4,16 +4,15 @@ version: '2'
 services:
   mysql:
     container_name: authen-db
-    image: mysql:latest
+    image: mysql:8.0.31
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: "@123123abc"
       MYSQL_DATABASE: "testdb"
-    volumes:
-      - ./mysql-data:/var/lib/mysql
-      - ./mysql-conf:/etc/mysql/conf.d
     networks:
       - kong-net
+    ports:
+      - "4004:3306"
   nodejs:
     hostname: authenservice
     container_name: authen-service

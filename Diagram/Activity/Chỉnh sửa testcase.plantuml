@@ -1,0 +1,22 @@
+@startuml
+title Biểu đồ activity - Sửa Testcase đã tồn tại trong đề thi
+
+|Người dùng|
+start
+  :Chọn chức năng sửa Testcase trong đề thi;
+|Hệ thống|
+  :Hiển thị thông tin Testcase hiện tại;
+  :Bao gồm cặp dữ liệu đầu vào và đầu ra;
+|Người dùng|
+  :Thực hiện cập nhật thông tin mới cho Testcase;
+  :Nhấn nút Submit;
+|Hệ thống|
+  :Xác nhận thông tin mới của Testcase;
+  :Cập nhật vào cơ sở dữ liệu của đề thi;
+|Người dùng|
+  :Hoàn tất quá trình sửa đổi;
+|Hệ thống|
+  :Cập nhật thành công;
+|Người dùng|
+stop
+@enduml

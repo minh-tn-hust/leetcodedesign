@@ -30,11 +30,9 @@ local function introspect_access_token(conf, access_token, customer_id)
         return kong.response.exit(500)
     end
 
-    local response_json = cjson.decode(res.body)
+    kong.log.err(cjson.encode(res.body));
 
-    kong.log.err("response body: " .. response_json)
-
-
+    kong.service.request.set_header("x-authen-info", cjson.encode(res.body));
 
     return true -- all is well
 end
@@ -62,7 +60,7 @@ function TokenHandler:access(conf)
 
     introspect_access_token(conf, access_token, customer_id)
 
-    kong.service.clear_header(conf.token_header)
+    kong.service.request.clear_header(conf.token_header)
 end
 
 

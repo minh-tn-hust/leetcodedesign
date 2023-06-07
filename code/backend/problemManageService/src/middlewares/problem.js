@@ -1,3 +1,18 @@
+getAuthInfoFromGateway = (req, res, next) => {
+    let infoHeader = req.headers["x-authen-info"];
+
+    if (!infoHeader) {
+        res.status(404).send({
+            message: "Unauthorized"
+        })
+    }
+
+    let info = JSON.parse(JSON.parse(infoHeader));
+    req.userId = info.userId;
+    req.authenedRoles = info.authenedRoles;
+    next();
+};
+
 checkNullFields = (req, res, next) => {
     const requiredFields = [
         'problemName',
@@ -27,6 +42,7 @@ checkNullFields = (req, res, next) => {
 
 
 const problemMiddleware = {
-    checkNullFields: checkNullFields
+    checkNullFields: checkNullFields,
+    getAuthInfoFromGateway : getAuthInfoFromGateway
 };
 module.exports = problemMiddleware;

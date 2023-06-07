@@ -33,7 +33,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Kong Gateway/Docker Installation.md",
+                "file": "Dockerode/Untitled 2.md",
                 "mode": "source",
                 "source": false
               }
@@ -100,8 +100,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "cf1f339e0317ca13",
@@ -117,7 +116,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Kong Gateway/Docker Installation.md",
+                "file": "Dockerode/Untitled 2.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -134,7 +133,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Kong Gateway/Docker Installation.md",
+                "file": "Dockerode/Untitled 2.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -157,7 +156,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Kong Gateway/Docker Installation.md"
+                "file": "Dockerode/Untitled 2.md"
               }
             }
           }
@@ -180,8 +179,11 @@
   },
   "active": "df539d15e25dd0bd",
   "lastOpenFiles": [
-    "Untitled 1.md",
+    "Dockerode/Các công việc cần làm.md",
+    "Dockerode/Untitled 2.md",
     "Kong Gateway/Docker Installation.md",
+    "Dockerode",
+    "Untitled 1.md",
     "Daily Note",
     "Kong Gateway"
   ]

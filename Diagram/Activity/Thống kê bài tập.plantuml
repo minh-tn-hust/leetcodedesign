@@ -1,0 +1,12 @@
+@startuml
+title Thống kê các bài tập
+
+|Người dùng|
+start
+:Vào trang chủ;
+|Hệ thống|
+:Hiển thị danh sách các bài thi hệ thống đang mở;
+|Người dùng|
+:Quan sát danh sách các bài thi;
+stop
+@enduml
