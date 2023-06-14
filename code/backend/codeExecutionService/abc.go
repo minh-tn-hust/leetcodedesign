@@ -1,5 +1,18 @@
 package main
-import "fmt"
+
+import (
+	"fmt"
+)
+
 func main() {
-    fmt.Println("hello world")
+	var number int
+
+	_, err := fmt.Scan(&number)
+	if err != nil {
+		fmt.Println("Error reading input:", err)
+		return
+	}
+
+	fmt.Println("Hello, world!")
+	fmt.Println("You entered:", number)
 }

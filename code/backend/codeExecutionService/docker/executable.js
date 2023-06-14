@@ -1,0 +1,270 @@
+const Docker = require('dockerode');
+const fs = require('fs');
+const Stream = require('stream');
+const BaseLanguage = require('./language/_base');
+
+
+class LanguageContainer {
+    /** @type number */ id = null;
+    /** @type boolean */ isExecuting = null;
+    /** @type Docker */ docker = null;
+    /** @type Docker.Container */ container = null;
+    /** @type BaseLanguage */ language = null;
+
+    setIsExecuting() {
+        this.isExecuting = true;
+    }
+
+    setIsNotExecuting() {
+        this.isExecuting = false;
+    }
+
+    constructor(language) {
+        this.language = language;
+        this.docker = new Docker();
+        this.id = Math.floor(Math.random() * 10000);
+    }
+
+    async initContainer() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await this.createContainer();
+                await this.startContainer();
+                resolve(true);
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+
+
+    async createContainer() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                this.container = await this.docker.createContainer(this.language.languageConfig);
+                resolve(true);
+            } catch (error) {
+                reject('[createContainer-Error] ' + error);
+            }
+        })
+    }
+
+    async startContainer() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await this.container.start();
+                resolve(true);
+            } catch (error) {
+                reject('[startContainer-Error] ' + error);
+            }
+        })
+    }
+
+
+    async stopAndRemoveContaienr() {
+        await this.container.stop();
+        await this.container.remove();
+    }
+
+    /**
+     * @param {Docker.Exec} exec 
+     */
+    async handleFinishRun(exec, beginTime) {
+        // DEBUG
+        let timeExecute = (Date.now() - beginTime);
+        let container = this.container;
+        let stats = await container.stats({ stream: false, "one-shot": true });
+        let totalUsageMemory = (stats.memory_stats.max_usage - stats.memory_stats.usage) / 1024
+        // DEBUG
+
+        let abortControler = new AbortController();
+        let inspectInfo = await exec.inspect();
+        let exitCode = inspectInfo.ExitCode;
+        return {
+            timeExecute : timeExecute,
+            totalUsageMemory : totalUsageMemory,
+            exitCode : exitCode
+        }
+    }
+
+    async handleFinishCompile() {
+        const stats = await this.container.stats({ stream: false, 'one-shot': true });
+        console.log("TOTAL USAGE COMPILE: " + JSON.stringify((stats.memory_stats.max_usage - stats.memory_stats.usage) / 1024));
+
+        // Dừng container để thực hiện reset lại max_usage
+        const options = {
+            t: 10, // Timeout: dừng container sau 10 giây
+            signal: 'SIGKILL' // Không gửi tín hiệu SIGTERM
+        };
+        await this.container.stop(options);
+
+        // khởi động lại container
+        await this.startContainer();
+    }
+
+    async compile() {
+        const { container, language } = this;
+        const compileOption = language.compileOption;
+
+        // Đối với ngôn ngữ không cần compile
+        if (compileOption === null) {
+            return true;
+        }
+
+        return new Promise(async (resolve, reject) => {
+            try {
+                this.setIsExecuting();
+                const exec = await container.exec(compileOption);
+                const execStream = await exec.start({
+                    hijack: true,
+                    stdin: true
+                });
+
+                var stdout = new Stream.PassThrough();
+                var stderr = new Stream.PassThrough();
+                var stdoutBuffer = "";
+                var stderrBuffer = "";
+
+                this.container.modem.demuxStream(execStream, stdout, stderr);
+
+                stderr.on('data', function (chunk) {
+                    stderrBuffer += chunk;
+                })
+
+                stdout.on('data', function (chunk) {
+                    stdoutBuffer += chunk;
+                })
+
+                execStream.on('finish', async () => {
+                    if (stderrBuffer === "") {
+                        await this.handleFinishCompile();
+                        resolve(true);
+                    } else {
+                        reject(stderrBuffer.replaceAll(this.language.baseFileName, "Source"));
+                    }
+                    this.setIsNotExecuting();
+                })
+            } catch (error) {
+                this.setIsNotExecuting()
+                rejects('Đã xảy ra lỗi khi thực thi lệnh compile trong container:', error);
+            }
+        })
+    }
+
+    async run() {
+        const { container, language } = this;
+        const runOption = language.runOption;
+        console.log(runOption);
+
+        return new Promise(async (resolve, reject) => {
+            try {
+                this.setIsExecuting();
+                const exec = await this.container.exec(runOption);
+                const execStream = await exec.start({
+                    hijack: true,
+                    stdin: true
+                });
+
+                let beginTime = Date.now();
+
+                var stdout = new Stream.PassThrough();
+                var stderr = new Stream.PassThrough();
+                var stdoutBuffer = "";
+                var stderrBuffer = "";
+
+                this.container.modem.demuxStream(execStream, stdout, stderr);
+
+                let inputStream = fs.createReadStream('A.txt', 'binary');
+
+                inputStream.on('data', function (chunk) {
+                    let buffer = Buffer.from(chunk, 'binary');
+                    execStream.write(buffer, 'binary');
+                })
+
+                inputStream.on('error', function(error) {
+                    console.log(error);
+                })
+
+                stderr.on('data', function (chunk) {
+                    stderrBuffer += chunk;
+                })
+
+                stdout.on('data', function (chunk) {
+                    stdoutBuffer += chunk;
+                })
+
+                await new Promise((resolve, reject) => {
+                    const timeoutId = setTimeout(() => {
+                        execStream.destroy();
+                        reject(new Error('Command timed out'));
+                    }, 2000);
+
+                    execStream.on('end', () => {
+                        clearTimeout(timeoutId);
+                        this.setIsNotExecuting();
+                        resolve();
+                    });
+                });
+
+                let self = this;
+
+                execStream.on('finish', async () => {
+                    let data = {};
+                    let inspecInfo = await self.handleFinishRun(exec, beginTime);
+                    this.setIsNotExecuting();
+                    if (stderrBuffer !== "") {
+                        reject('[LanguageContainer - stderr] ' + stderrBuffer);
+                    } else {
+                        resolve({
+                            ...inspecInfo,
+                            stdout : stdoutBuffer,
+                        })
+                    }
+                })
+            } catch (error) {
+                this.setIsNotExecuting();
+                reject('[LanguageContainer - run] '+ error);
+            }
+        })
+    }
+
+    async createFileWithBuffer(buffer, fileName) {
+        return new Promise(async (resolve, reject) => {
+            let writeFileOpt = {
+                Cmd: [
+                    'sh',
+                    '-c',
+                    `echo '${buffer}' > ${fileName}`
+                ],
+                AttachStdout: true,
+                AttachStderr: true
+            };
+
+            let container = this.container;
+
+            const exec = await container.exec(writeFileOpt);
+            const execStream = await exec.start({
+                hijack: true,
+                stdin: true
+            });
+
+            var stdout = new Stream.PassThrough();
+            var stderr = new Stream.PassThrough();
+            var stdoutBuffer = "";
+            var stderrBuffer = "";
+
+            this.container.modem.demuxStream(execStream, stdout, stderr);
+
+            execStream.on('finish', function () {
+                if (stderrBuffer === "") {
+                    resolve(true);
+                } else {
+                    reject(stderrBuffer)
+                }
+            })
+
+        })
+    };
+}
+
+module.exports = LanguageContainer
