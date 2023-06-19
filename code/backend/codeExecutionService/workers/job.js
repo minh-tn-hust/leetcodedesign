@@ -20,28 +20,37 @@ class WorkerSend {
 
 
 class WorkerJob {
-    /** @type Worker */ worker = null;
-    /** @type isRunning */ isRunning = null;
+    /** @type {Worker} */ worker = null;
+    /** @type boolean */ isRunning = null;
+    /** @type boolean */ canUse = null;
+    /** @type {Language.SUPPORTED} */ language = null;
+
+    /** @type {WorkerQueue} */ queue = null;
 
     /**
      * @param {string} filename 
-     * @param {WorkerOptions} options 
+     * @param {{workerData : {languageType : Language.SUPPORTED, workingDirectory : string}}} options 
+     * @param {WorkerQueue} queue
      */
-    constructor(filename, options) {
+    constructor(filename, options, queue) {
         this.createDirectoryIfNotExists(options.workerData.workingDirectory);
         this.worker = new Worker(filename, options);
         this.isRunning = false;
+        this.canUse = false;
+        this.language = options.workerData.languageType;
+        this.queue = queue
+
         this.initWorker();
     }
 
     createDirectoryIfNotExists(directoryPath) {
         if (!fs.existsSync(directoryPath)) {
-          fs.mkdirSync(directoryPath);
-          console.log(`Directory created: ${directoryPath}`);
+            fs.mkdirSync(directoryPath);
+            console.log(`Directory created: ${directoryPath}`);
         } else {
-          console.log(`Directory already exists: ${directoryPath}`);
+            console.log(`Directory already exists: ${directoryPath}`);
         }
-      }
+    }
 
     initWorker() {
         this.worker.on('message', function (data) {
@@ -57,6 +66,7 @@ class WorkerJob {
      * @param {WorkerReponse} response
      */
     handleWorkerResponse(response) {
+        console.log(response.type);
         switch (response.type) {
             case WorkerJob.TYPE.CREATE_FILE:
                 this.handleCreateFile(response);
@@ -74,11 +84,25 @@ class WorkerJob {
                 this.handleStart(response);
                 break;
 
+            case WorkerJob.TYPE.STOP_AND_REMOVE:
+                this.handleStop(response);
+                break;
+
             default:
                 throw "TYPE NÀY CHƯA ĐƯỢC HỖ TRỢ: TYPE = " + response.type
         }
 
     };
+
+    sendUpdateTimeLimited(newTimeLimited) {
+        let send = new WorkerSend();
+        send.type = WorkerJob.TYPE.UPDATE_TIME_LIMITED;
+        send.data = {
+            timeLimited: newTimeLimited
+        };
+
+        this.worker.postMessage(send);
+    }
 
     sendCreateFile(bufferData, fileName) {
         let send = new WorkerSend();
@@ -96,12 +120,19 @@ class WorkerJob {
         this.worker.postMessage(send);
     }
 
+    sendStop() {
+        let send = new WorkerSend();
+        send.type = WorkerJob.TYPE.STOP_AND_REMOVE;
+        this.worker.postMessage(send);
+    }
+
     /**
      * @param {WorkerReponse} workerResponse 
      */
     handleCreateFile(workerResponse) {
         if (workerResponse.data === true) {
             this.sendRunning();
+            this.isRunning = true;
         } else {
             console.log(workerResponse.data);
         }
@@ -112,6 +143,7 @@ class WorkerJob {
     }
 
     handleRunning(response) {
+        this.isRunning = false;
         console.log(response);
     }
 
@@ -119,18 +151,37 @@ class WorkerJob {
      * @param {WorkerReponse} workerResponse 
      */
     handleStart(workerResponse) {
-        console.log("Create and start container success with id = " + workerResponse.containerId);
+        if (workerResponse.data === true) {
+            this.canUse = true;
+            console.log("START DONE");
+            this.queue.runNextJob();
+        } else {
+            console.log(workerResponse.data);
+        }
+    }
+
+    handleStop(workerResponse) {
+        if (workerResponse.data === true) {
+            this.worker.terminate();
+            this.canUse = false;
+            this.isRunning = false;
+            this.queue.removeContainer();
+        } else {
+            console.log(workerResponse.data);
+        }
     }
 }
 
 WorkerJob.TYPE = {
     STARTING: 'starting',
     CREATE_FILE: 'createa_file',
-    EXECUTING: 'executing'
+    EXECUTING: 'executing',
+    UPDATE_TIME_LIMITED: 'update_time_limited',
+    STOP_AND_REMOVE: 'stop_and_remove'
 }
 
 module.exports = {
-    WorkerJob: WorkerJob,
-    WorkerReponse: WorkerReponse,
-    WorkerSend : WorkerSend
+    /** @type WorkerJob */ WorkerJob: WorkerJob,
+    /** @type WorkerReponse */ WorkerReponse: WorkerReponse,
+    /** @type WorkerSend */ WorkerSend: WorkerSend
 }

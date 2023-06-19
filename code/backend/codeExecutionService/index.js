@@ -1,43 +1,21 @@
 const Language = require("./docker/language/LanguageFactory");
 const { WorkerJob, WorkerReponse } = require("./workers/job");
 const fs = require('fs');
+const { WorkerQueueSingleton, JobData } = require("./workers/queue");
 
-console.log(__dirname);
+let workerQueue = WorkerQueueSingleton.getInstance();
+let jobData = new JobData(2000, 256, Language.SUPPORTED.CPP);
 
+workerQueue.createWorker(jobData);
+workerQueue.createWorker(jobData);
+workerQueue.createWorker(jobData);
+workerQueue.createWorker(jobData);
+workerQueue.createWorker(jobData);
+workerQueue.createWorker(jobData);
+workerQueue.createWorker(jobData);
+workerQueue.createWorker(jobData);
+workerQueue.createWorker(jobData);
+workerQueue.createWorker(jobData);
 
-let TYPE = [
-  Language.SUPPORTED.CPP,
-  Language.SUPPORTED.GO
-]
-
-for (let i = 0; i < 10; i++) {
-  let languageType = TYPE[Math.round(Math.random() * 1000) % 2];
-
-  let inputFileSource;
-  let outputFileName;
-
-  if (languageType === Language.SUPPORTED.CPP) {
-    inputFileSource = './A.cpp';
-    outputFileName = 'TEST_CPP.cpp';
-  } else {
-    inputFileSource = './abc.go';
-    outputFileName = 'TEST_GO.go';
-  }
-
-
-  let workerJob = new WorkerJob('./workers/execute.js', {
-    workerData: {
-      languageType: languageType,
-      workingDirectory: __dirname + '/source/' + Math.round(Math.random() * 1000)
-    }
-  });
-
-  setTimeout(function () {
-    let readStream = fs.createReadStream(inputFileSource, 'ascii');
-    let buffer = "";
-    readStream.on('data', function (chunk) {
-      buffer += chunk;
-      workerJob.sendCreateFile(JSON.stringify(buffer), outputFileName);
-    }.bind(this));
-  }, 5000);
-}
+jobData = new JobData(2000, 256, Language.SUPPORTED.GO);
+workerQueue.addJob(jobData);

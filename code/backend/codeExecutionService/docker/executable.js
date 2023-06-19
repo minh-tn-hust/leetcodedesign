@@ -3,13 +3,13 @@ const fs = require('fs');
 const Stream = require('stream');
 const BaseLanguage = require('./language/_base');
 
-
 class LanguageContainer {
     /** @type number */ id = null;
     /** @type boolean */ isExecuting = null;
     /** @type Docker */ docker = null;
     /** @type Docker.Container */ container = null;
     /** @type BaseLanguage */ language = null;
+    /** @type number */ timeLimited = null; /* milisec */ 
 
     setIsExecuting() {
         this.isExecuting = true;
@@ -19,10 +19,14 @@ class LanguageContainer {
         this.isExecuting = false;
     }
 
-    constructor(language) {
-        this.language = language;
+    constructor(language, timeLimited) {
+        if (!timeLimited || !language)  {
+            throw "[constructorContainer-Error] : Not enough infomation to create Container";
+        }
         this.docker = new Docker();
         this.id = Math.floor(Math.random() * 10000);
+        this.language = language;
+        this.timeLimited = timeLimited;
     }
 
     async initContainer() {
@@ -61,7 +65,7 @@ class LanguageContainer {
     }
 
 
-    async stopAndRemoveContaienr() {
+    async stopAndRemoveContainer() {
         await this.container.stop();
         await this.container.remove();
     }
@@ -197,7 +201,7 @@ class LanguageContainer {
                     const timeoutId = setTimeout(() => {
                         execStream.destroy();
                         reject(new Error('Command timed out'));
-                    }, 2000);
+                    }, this.timeLimited);
 
                     execStream.on('end', () => {
                         clearTimeout(timeoutId);
@@ -264,7 +268,14 @@ class LanguageContainer {
             })
 
         })
-    };
+    }
+
+    /**
+     * @param {number} newTimeLimited 
+     */
+    updateTimelimited(newTimeLimited) {
+        this.timeLimited = newTimeLimited;
+    }
 }
 
 module.exports = LanguageContainer
