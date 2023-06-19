@@ -14,4 +14,12 @@ module.exports = function(app) {
         "/api/testcase/createFile",
         controller.uploadTestcaseFile
     );
+
+    app.post(
+        "/api/testcase/addTestcase",
+        middleware.auth.getAuthInfoFromGateway,
+        middleware.auth.isAdminOrMod,
+        middleware.testcase.checkNullFields,
+        controller.addTestcase
+    )
 };

@@ -35,10 +35,31 @@ exports.uploadTestcaseFile = async function(req, res) {
     })
 }
 
-exports.editTestcaseFile = async function(req, res) {
 
-}
+exports.addTestcase = async function(req, res) {
+    const userId = req.userId;
+    const authendedRoles = req.authenedRoles;
 
-exports.addTestcase = function(req, res) {
+    let ownerId = req.userId;
+    let isExample = req.body.isExample;
+    let explanation = req.body.explanation;
+    let inp = req.body.inp;
+    let out = req.body.out;
+    let problemId = req.body.problemId;
 
+    try {
+        let data = {
+            ownerId : ownerId,
+            isExample : isExample,
+            explanation : explanation,
+            inp : inp,
+            out : out,
+            problemId : problemId
+        }
+        console.log(data);
+        let testCase = await Testcase.create(data)
+        res.status(200).send({message : "Tạo test case thành công"});
+    } catch (error) {
+        res.status(500).send({message : "Bạn phải tạo Problem trước khi thêm test case"});
+    }
 }

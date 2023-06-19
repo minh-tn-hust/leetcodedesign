@@ -1,17 +1,19 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const bodyParser = require("body-parser");
+
 require('dotenv').config();
 
 const app = express();
 
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(morgan('combined'))
-
-
-
+app.use(morgan('combined'));
+app.use(bodyParser.urlencoded({
+  limit: "50mb",
+  extended: false
+}));
+app.use(bodyParser.json({limit: "50mb"}));
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
@@ -49,3 +51,6 @@ async function initial() {
         });
     }
 };
+
+const rpcServer = require('./src/grpc/index');
+rpcServer.start(50051);

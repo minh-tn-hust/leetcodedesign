@@ -14,6 +14,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         ownerId : {
             type: Sequelize.INTEGER
+        },
+        problemId : {
+            type : Sequelize.INTEGER
         }
     });
 

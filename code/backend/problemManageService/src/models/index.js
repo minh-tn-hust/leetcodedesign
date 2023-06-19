@@ -32,7 +32,6 @@ db.problem = require('./problem.model')(sequelize, Sequelize);
 db.testcase = require('./testcase.model')(sequelize, Sequelize);
 db.category = require('./category.model')(sequelize, Sequelize);
 db.languageSupport = require('./languageSupport.model')(sequelize, Sequelize);
-db.uploadTestcaseFile = require('./testcaseFile.model')(sequelize, Sequelize);
 
 // 1 category ~ n problem
 db.category.belongsToMany(db.problem, {
@@ -58,8 +57,9 @@ db.problem.hasMany(db.languageSupport, {
     foreignKey: "problemId"
 });
 
-db.testcase.hasMany(db.uploadTestcaseFile, {
-    foreignKey: "testcaseId"
-})
+// 1 problem ~ n test case
+db.problem.hasMany(db.testcase, {
+    foreignKey: "problemId"
+});
 
 module.exports = db;
