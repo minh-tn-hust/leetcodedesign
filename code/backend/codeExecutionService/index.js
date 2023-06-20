@@ -1,21 +1,15 @@
 const Language = require("./docker/language/LanguageFactory");
-const { WorkerJob, WorkerReponse } = require("./workers/job");
-const fs = require('fs');
-const { WorkerQueueSingleton, JobData } = require("./workers/queue");
+const { WorkerJob } = require("./workers/job");
+const {JobData, WorkerQueueSingleton} = require("./workers/queue");
 
-let workerQueue = WorkerQueueSingleton.getInstance();
-let jobData = new JobData(2000, 256, Language.SUPPORTED.CPP);
+var workerQueue = WorkerQueueSingleton.getInstance();
 
-workerQueue.createWorker(jobData);
-workerQueue.createWorker(jobData);
-workerQueue.createWorker(jobData);
-workerQueue.createWorker(jobData);
-workerQueue.createWorker(jobData);
-workerQueue.createWorker(jobData);
-workerQueue.createWorker(jobData);
-workerQueue.createWorker(jobData);
-workerQueue.createWorker(jobData);
-workerQueue.createWorker(jobData);
 
-jobData = new JobData(2000, 256, Language.SUPPORTED.GO);
-workerQueue.addJob(jobData);
+for (let i = 0; i < 30; i++) {
+    let random = Math.floor(Math.random() *10000)  % 2;
+    if (random === 0) {
+        workerQueue.addJob(new JobData(2000, 256, Language.SUPPORTED.CPP));
+    } else {
+        workerQueue.addJob(new JobData(2000, 256, Language.SUPPORTED.GO));
+    }
+}

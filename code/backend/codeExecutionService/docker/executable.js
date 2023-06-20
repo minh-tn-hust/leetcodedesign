@@ -92,12 +92,9 @@ class LanguageContainer {
     }
 
     async handleFinishCompile() {
-        const stats = await this.container.stats({ stream: false, 'one-shot': true });
-        console.log("TOTAL USAGE COMPILE: " + JSON.stringify((stats.memory_stats.max_usage - stats.memory_stats.usage) / 1024));
-
         // Dừng container để thực hiện reset lại max_usage
         const options = {
-            t: 10, // Timeout: dừng container sau 10 giây
+            t: 0, // Timeout: dừng container sau 10 giây
             signal: 'SIGKILL' // Không gửi tín hiệu SIGTERM
         };
         await this.container.stop(options);
@@ -155,10 +152,9 @@ class LanguageContainer {
         })
     }
 
-    async run() {
+    async run(input) {
         const { container, language } = this;
         const runOption = language.runOption;
-        console.log(runOption);
 
         return new Promise(async (resolve, reject) => {
             try {
@@ -178,16 +174,9 @@ class LanguageContainer {
 
                 this.container.modem.demuxStream(execStream, stdout, stderr);
 
-                let inputStream = fs.createReadStream('A.txt', 'binary');
+                let buffer = Buffer.from(input, 'ascii');
+                execStream.write(buffer, 'ascii');
 
-                inputStream.on('data', function (chunk) {
-                    let buffer = Buffer.from(chunk, 'binary');
-                    execStream.write(buffer, 'binary');
-                })
-
-                inputStream.on('error', function(error) {
-                    console.log(error);
-                })
 
                 stderr.on('data', function (chunk) {
                     stderrBuffer += chunk;

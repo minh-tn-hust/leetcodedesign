@@ -6,11 +6,13 @@ class JobData {
     timeLimited = null;
     memoryLimited = null;
     languageType = null;
+    id = null;
 
     constructor(timeLimited, memoryLimited, languageType) {
         this.languageType = languageType;
         this.timeLimited = timeLimited;
         this.memoryLimited = memoryLimited;
+        this.id = Math.floor(Math.random() * 1000000) % 1000000;
     }
 }
 
@@ -30,6 +32,7 @@ class WorkerQueue {
 
     /**
      * @param {JobData} jobData 
+     * @return {WrokerJob}
      */
     createWorker(jobData) {
         if (this.workers.length === this.maxWorker) {
@@ -46,6 +49,7 @@ class WorkerQueue {
             },
             this
         )
+        worker.setData(jobData)
 
         this.workers.push(worker);
         return worker;
@@ -56,37 +60,67 @@ class WorkerQueue {
      * @return {WorkerJob}
      */
     getAvailableWorker(jobData) {
+        if (this.workers.length < this.maxWorker) {
+            console.log('createNewWorker');
+            return this.createWorker(jobData);
+        }
+
         for (let /** @type WorkerJob */ worker of this.workers) {
-            if (jobData.languageType === worker.language && !worker.isRunning && worker.canUse === true) {
+            if (jobData.languageType === worker.language) {
+                if (worker.status === WorkerJob.STATUS.AVAILABLE) {
+                    worker.setData(jobData);
+                    console.log('reuseWorker');
+                    return worker;
+                }
+            }
+        }
+
+        return this.findContainerAndReplace(jobData);
+    }
+
+    /**
+     * @param {JobData} jobData 
+     */
+    findContainerAndReplace(jobData) {
+        // Kiểm tra xem có container nào đang bị remove đi vì job hay không
+        for (let worker of this.workers) {
+            if (worker.status === WorkerJob.STATUS.STOP && worker.data.id === jobData.id) {
+                console.log("findContainerAndReplace")
+                return null;
+            }
+        }
+
+        // Tìm container đang rảnh và remove
+        // Khi thực hiện remove container dành cho một Job nào đó
+        // Đính kèm thông tin của Job mới vào Container bị remove
+        // Sau đó shift Job mới ra khởi queue để đảm bảo rằng
+        // Job mới đó không block các Job khác trong khi chờ được remove
+        for (let /** @type WorkerJob */ worker of this.workers) {
+            if (worker.status === WorkerJob.STATUS.AVAILABLE) {
+                worker.setData(jobData);
+                worker.sendStop();
+                console.log("stopContainer");
                 return worker;
             }
         }
 
-        this.findContainerAndReplace();
-
         return null;
     }
 
-    findContainerAndReplace() {
-        let index = 0;
-        for (let /** @type WorkerJob */ worker of this.workers) {
-            if (worker.isRunning === false && worker.canUse === true) {
-                console.log("STOP WORKER");
-                worker.sendStop();
-                break;
-            }
-            index++;
-        }
-    }
-
+    /**
+     * Khi thực hiện remove thành công Container dành cho Job
+     * nào đó, thực hiện lấy lại data đã được gán vào container để remove
+     * Data này chính là Job sẽ được sử dụng vào Container mới
+     */
     removeContainer() {
         for (let i = 0; i < this.workers.length; i++) {
-            if(this.workers[i].canUse === false) {
+            if (this.workers[i].status === WorkerJob.STATUS.STOP && this.workers[i].data !== null) {
+                let data = this.workers[i].data;
+                this.queueJob.push(data);
                 this.workers.splice(i, 1);
                 i--;
             }
         }
-        console.log("REMOVE CONTAINER DONE");
         this.runNextJob();
     }
 
@@ -95,49 +129,28 @@ class WorkerQueue {
      */
     addJob(job) {
         this.queueJob.push(job);
-        console.log("ADD JOB DONE");
         this.runNextJob();
     }
 
     runNextJob() {
-        console.log("CALLING RUN NEXT JOB");
         let nextJob = this.queueJob[0];
 
         if (!nextJob) {
-            console.log("1");
+            console.log("C1");
             return;
         }
 
         let availableWorker = this.getAvailableWorker(nextJob);
 
-        if (!availableWorker || availableWorker.canUse === false) {
-            this.createWorker(nextJob);
+        if (!availableWorker) {
+            console.log("C2");
             return;
         }
 
+
+        console.log(this.queueJob.length);
+
         this.queueJob.shift();
-
-        // DEBUG
-        let inputFileSource;
-        let outputFileName;
-        
-        if (nextJob.languageType === Language.SUPPORTED.CPP) {
-            console.log("CPP LANGUAGE");
-            inputFileSource = './A.cpp';
-            outputFileName = 'TEST_CPP.cpp';
-        } else {
-            console.log("GO LANGUAGE");
-            inputFileSource = './abc.go';
-            outputFileName = 'TEST_GO.go';
-        }
-
-        let readStream = fs.createReadStream(inputFileSource, 'ascii');
-        let buffer = "";
-        readStream.on('data', function (chunk) {
-            buffer += chunk;
-            availableWorker.sendCreateFile(JSON.stringify(buffer), outputFileName);
-        }.bind(this));
-        // END DEBUG
     }
 }
 

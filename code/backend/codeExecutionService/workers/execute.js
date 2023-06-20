@@ -3,18 +3,17 @@ const Language = require('../docker/language/LanguageFactory');
 const LanguageContainer = require('../docker/executable');
 const { WorkerJob, WorkerSend, WorkerReponse } = require('./job');
 const { defaultMaxListeners } = require('events');
-
-function createWorkerResponse(type) {
-  return new WorkerReponse(
-    type,
-    dockerContainer.id,
-    null
-  );
-}
+const client = require('../grpc/index');
 
 let /** @type LanguageContainer */ dockerContainer;
+let /** @type Array<String> */ inps;
+let /** @type Array<String> */ outs;
+
+function createWorkerResponse(type) {
+  return new WorkerReponse( type, dockerContainer.id, null);
+}
+
 async function createContainer(wokerData) {
-  console.log(workerData);
   const /** @type Language.SUPPORTED */ languageType = wokerData.languageType;
   const timeLimited = wokerData.timeLimited;
   const executionPath = workerData.workingDirectory;
@@ -62,7 +61,6 @@ function handleSendMessage(message) {
   }
 }
 
-
 /**
  * @param {{buffer : string, fileName : string}} data 
  */
@@ -86,11 +84,20 @@ function updateFileName(fileName) {
 async function runCode() {
   let response = createWorkerResponse(WorkerJob.TYPE.EXECUTING);
   try {
+    await getTestCase(1);
     await dockerContainer.compile();
-    let runInfo = await dockerContainer.run();
+    let listTestInfo = [];
+    for (let inp of inps) {
+      let runInfo = await dockerContainer.run(inp);
+      listTestInfo.push(runInfo);
+      if (runInfo.status === false) {
+        break;
+      }
+      await dockerContainer.handleFinishCompile(); // restart container to check memory
+    }
     response.data = {
       status: true,
-      runInfo: runInfo
+      runInfo: listTestInfo
     };
   } catch (error) {
     response.data = {
@@ -102,7 +109,6 @@ async function runCode() {
 }
 
 async function stopAndRemove() {
-  console.log("START REMOVE");
   let response = createWorkerResponse(WorkerJob.TYPE.STOP_AND_REMOVE);
   try {
     await dockerContainer.stopAndRemoveContainer();
@@ -121,8 +127,30 @@ function updateTimeLimited(data) {
   dockerContainer.updateTimelimited(data.timeLimited);
 }
 
-createContainer(workerData);
+async function getTestCase(problemId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const result = await new Promise((resolve, reject) => {
+        client.getTestCase({ problemId: problemId }, (error, data) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data)
+          }
+        });
+      });
+
+      inps = result.inps;
+      outs = result.outs;
+      resolve(true);
+    } catch (error) {
+      reject(error);
+    }
+  })
+}
 
 parentPort.on('message', async function (/** @type WorkerSend */ data) {
   handleSendMessage(data);
 })
+
+createContainer(workerData);
