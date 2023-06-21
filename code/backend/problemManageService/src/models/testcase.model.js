@@ -7,10 +7,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN
         },
         inp: {
-            type: Sequelize.TEXT
+            type: Sequelize.TEXT('long')
         },
         out: {
-            type: Sequelize.TEXT
+            type: Sequelize.TEXT('long')
         },
         ownerId : {
             type: Sequelize.INTEGER

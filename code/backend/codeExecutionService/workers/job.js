@@ -23,7 +23,6 @@ class WorkerSend {
 class WorkerJob {
     /** @type {Worker} */ worker = null;
     /** @type {WorkerJob.STATUS} */ status = null;
-    /** @type {Language.SUPPORTED} */ language = null;
 
     /** @type {WorkerQueue} */ queue = null;
     /** @type {JobData} */ data = null;
@@ -35,6 +34,9 @@ class WorkerJob {
         this.status = status;
     }
 
+    /**
+     * @param {JobData} data 
+     */
     setData(data) {
         this.data = data;
     }
@@ -43,7 +45,7 @@ class WorkerJob {
         let inputFileSource;
         let outputFileName;
 
-        if (this.language === Language.SUPPORTED.CPP) {
+        if (this.data.languageType === Language.SUPPORTED.CPP) {
             inputFileSource = './A.cpp';
             outputFileName = 'TEST_CPP.cpp';
         } else {
@@ -66,9 +68,9 @@ class WorkerJob {
      */
     constructor(filename, options, queue) {
         this.createDirectoryIfNotExists(options.workerData.workingDirectory);
+        console.log("Worker Options: " + JSON.stringify(options));
         this.worker = new Worker(filename, options);
-        this.language = options.workerData.languageType;
-        this.queue = queue
+        this.queue = queue;
         this.setStatus(WorkerJob.STATUS.CREATING);
 
         this.initWorker();
@@ -90,6 +92,13 @@ class WorkerJob {
         });
     }
 
+    sendRecreateNewContainer(workerData) {
+        this.setStatus(WorkerJob.STATUS.CREATING);
+        let send = new WorkerSend();
+        send.type = WorkerJob.TYPE.RECREATE_CONTAINER;
+        send.data = workerData;
+        this.worker.postMessage(send);
+    }
 
     sendUpdateTimeLimited(newTimeLimited) {
         this.setStatus(WorkerJob.STATUS.RUNNING);
@@ -164,7 +173,7 @@ class WorkerJob {
     handleCreateFileFinish(workerResponse) {
         if (workerResponse.data === true) {
             this.sendRunning();
-            this.isRunning = true;
+            this.setStatus(WorkerJob.STATUS.RUNNING);
         } else {
             console.log(workerResponse.data);
         }
@@ -177,6 +186,7 @@ class WorkerJob {
     handleRunningFinish(response) {
         this.setStatus(WorkerJob.STATUS.AVAILABLE);
         this.setData(null);
+        console.log(response);
         this.queue.runNextJob();
     }
 
@@ -192,11 +202,14 @@ class WorkerJob {
         }
     }
 
-    handleStopFinish(workerResponse) {
+    async handleStopFinish(workerResponse) {
         if (workerResponse.data === true) {
-            this.worker.terminate();
-            this.status = WorkerJob.STATUS.STOP;
-            this.queue.removeContainer();
+            try {
+                this.status = WorkerJob.STATUS.STOP;
+                this.queue.removeContainer();
+            } catch (error) {
+                console.log("STOP ERRROR : " + error);
+            }
         } else {
             console.log(workerResponse.data);
         }
@@ -208,14 +221,16 @@ WorkerJob.TYPE = {
     CREATE_FILE: 'createa_file',
     EXECUTING: 'executing',
     UPDATE_TIME_LIMITED: 'update_time_limited',
-    STOP_AND_REMOVE: 'stop_and_remove'
+    STOP_AND_REMOVE: 'stop_and_remove',
+    RECREATE_CONTAINER : 'recreate_container'
 }
 
 WorkerJob.STATUS = {
     CREATING: 'creating',
     AVAILABLE: 'ready_for_use',
     RUNNING: 'running',
-    STOP: 'stop'
+    STOP: 'stop',
+    TERMINATE : 'terminate'
 }
 
 module.exports = {

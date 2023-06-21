@@ -97,10 +97,14 @@ class LanguageContainer {
             t: 0, // Timeout: dừng container sau 10 giây
             signal: 'SIGKILL' // Không gửi tín hiệu SIGTERM
         };
-        await this.container.stop(options);
+        try {
+            await this.container.stop(options);
 
-        // khởi động lại container
-        await this.startContainer();
+            // khởi động lại container
+            await this.startContainer();
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     async compile() {

@@ -56,6 +56,19 @@ class WorkerQueue {
     }
 
     /**
+     * @param {JobData} jobData 
+     * @param {WorkerJob} worker 
+     */
+    recreateContainerInWorker(jobData, worker) {
+        let workerData = {
+            languageType: jobData.languageType,
+            timeLimited: jobData.timeLimited,
+            workingDirectory: "C:\\Users\\minht\\OneDrive\\Desktop\\ĐỒ ÁN TỐT NGHIỆP\\code\\backend\\codeExecutionService\\" + '/source/' + Math.round(Math.random() * 1000),
+        }
+        worker.sendRecreateNewContainer(workerData);
+    }
+
+    /**
      * @param {JobData} jobData
      * @return {WorkerJob}
      */
@@ -65,10 +78,22 @@ class WorkerQueue {
             return this.createWorker(jobData);
         }
 
+        for (let/** @type WorkerJob */ worker of this.workers) {
+            if (worker.status === WorkerJob.STATUS.TERMINATE) {
+                worker.setData(jobData);
+                this.recreateContainerInWorker(jobData, worker);
+                return worker;
+            }
+        }
+
         for (let /** @type WorkerJob */ worker of this.workers) {
-            if (jobData.languageType === worker.language) {
+            if (worker.data === null) {
+                continue;
+            }
+            if (jobData.languageType === worker.data.languageType) {
                 if (worker.status === WorkerJob.STATUS.AVAILABLE) {
                     worker.setData(jobData);
+                    worker.runJob();
                     console.log('reuseWorker');
                     return worker;
                 }
@@ -117,8 +142,7 @@ class WorkerQueue {
             if (this.workers[i].status === WorkerJob.STATUS.STOP && this.workers[i].data !== null) {
                 let data = this.workers[i].data;
                 this.queueJob.push(data);
-                this.workers.splice(i, 1);
-                i--;
+                this.workers[i].setStatus(WorkerJob.STATUS.TERMINATE);
             }
         }
         this.runNextJob();

@@ -110,3 +110,9 @@ class ContainerManagement {
 
 
 # Fucking shit with ' and " in Linux echo command
+
+# Bị limit json size gửi lên server
+
+# Không thể tạo được Worker mới ngay sau khi Terminate một worker, bắt buộc phải sử dụng lại
+
+# Khởi tạo lại một Container đã khởi tạo / stop một container đã stop

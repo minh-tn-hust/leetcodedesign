@@ -57,9 +57,10 @@ exports.addTestcase = async function(req, res) {
             problemId : problemId
         }
         console.log(data);
-        let testCase = await Testcase.create(data)
+        let testCase = await Testcase.create(data);
         res.status(200).send({message : "Tạo test case thành công"});
     } catch (error) {
+        console.log(error);
         res.status(500).send({message : "Bạn phải tạo Problem trước khi thêm test case"});
     }
 }
