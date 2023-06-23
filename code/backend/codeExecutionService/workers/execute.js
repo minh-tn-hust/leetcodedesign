@@ -50,7 +50,7 @@ function handleSendMessage(message) {
       break;
 
     case WorkerJob.TYPE.EXECUTING:
-      runCode();
+      runCode(message.data);
       break;
 
     case WorkerJob.TYPE.STOP_AND_REMOVE:
@@ -87,11 +87,11 @@ function updateFileName(fileName) {
   language.updateFilename(fileName);
 }
 
-async function runCode() {
+async function runCode(data) {
   console.log("STEP 3: Compile && Run code")
   let response = createWorkerResponse(WorkerJob.TYPE.EXECUTING);
   try {
-    await getTestCase(1);
+    await getTestCase(data.problemId);
     await dockerContainer.compile();
     let listTestInfo = [];
     for (let index in inps) {

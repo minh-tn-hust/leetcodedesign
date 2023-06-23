@@ -125,6 +125,7 @@ class WorkerJob {
         this.setStatus(WorkerJob.STATUS.RUNNING);
         let send = new WorkerSend();
         send.type = WorkerJob.TYPE.EXECUTING;
+        send.data = {problemId : this.data.problemId}
         this.worker.postMessage(send);
     }
 

@@ -29,4 +29,10 @@ module.exports = function(app) {
         submission.checkNullField,
         controller.runWithStoreData
     )
+
+    app.post(
+        "/getSubmissionById",
+        auth.getAuthInfoFromGateway,
+        controller.getSubmissionById
+    )
 };

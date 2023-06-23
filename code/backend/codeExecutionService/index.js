@@ -33,7 +33,7 @@ const Submission = db.submission;
 
 console.log('Delay 10s before connect to DB');
 setTimeout(function () {
-    db.sequelize.sync({force: true}).then(() => {
+    db.sequelize.sync({alter : true}).then(() => {
         console.log('Drop and Resync DB done');
     }).catch((error) => {
         console.log(error);

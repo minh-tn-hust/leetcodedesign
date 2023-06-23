@@ -27,6 +27,6 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.sumission = require('./submission.model')(sequelize, Sequelize);
+db.submission = require('./submission.model')(sequelize, Sequelize);
 
 module.exports = db;

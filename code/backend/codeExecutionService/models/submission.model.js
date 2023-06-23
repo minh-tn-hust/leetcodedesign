@@ -12,10 +12,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
     },
     source: {
-      type: Sequelize.TEXT
+      type: Sequelize.TEXT('long')
     },
     status: {
-      type: Sequelize.STRING
+      type: Sequelize.TEXT('long')
     },
     numberTestcasePass: {
       type: Sequelize.INTEGER
