@@ -91,19 +91,24 @@ class LanguageContainer {
         }
     }
 
-    async handleFinishCompile() {
-        // Dừng container để thực hiện reset lại max_usage
-        const options = {
-            t: 0, // Timeout: dừng container sau 10 giây
-            signal: 'SIGKILL' // Không gửi tín hiệu SIGTERM
-        };
+    async handleStopAndRun() {
         try {
-            await this.container.stop(options);
-
+            await this.container.stop({signal : 'SIGKILL'}); // <--- Bị lỗi tại chỗ này
             // khởi động lại container
             await this.startContainer();
         } catch (error) {
-            console.log(error);
+            console.log("Lỗi khi bắt đầu lại container sau khi run " + error); // <--- Dẫn tới chỗ này xảy ra bug, và không thể chạy tiếp được
+        }
+    }
+
+
+    async handleFinishCompile() {
+        try {
+            await this.container.stop({signal : 'SIGKILL'});
+            // khởi động lại container
+            await this.startContainer();
+        } catch (error) {
+            console.log("Lỗi khi bắt đầu lại container sau khi compile " + error);
         }
     }
 
@@ -151,12 +156,12 @@ class LanguageContainer {
                 })
             } catch (error) {
                 this.setIsNotExecuting()
-                rejects('Đã xảy ra lỗi khi thực thi lệnh compile trong container:', error);
+                reject('Đã xảy ra lỗi khi thực thi lệnh compile trong container:', error);
             }
         })
     }
 
-    async run(input) {
+    async run(input, output) {
         const { container, language } = this;
         const runOption = language.runOption;
 
@@ -215,6 +220,7 @@ class LanguageContainer {
                         resolve({
                             ...inspecInfo,
                             stdout : stdoutBuffer,
+                            output : output
                         })
                     }
                 })

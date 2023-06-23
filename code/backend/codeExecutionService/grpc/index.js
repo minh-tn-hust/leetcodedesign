@@ -20,7 +20,5 @@ const client = new ProblemManageService(
     grpc.credentials.createInsecure(),
 );
 
-console.log('Create RCP User Client: ' + ServiceHost+':'+RPC_PORT);
-
 module.exports = client;
 

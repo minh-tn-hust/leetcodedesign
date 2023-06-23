@@ -73,7 +73,7 @@ async function createFile(data) {
   console.log("STEP 2: Create Source file")
   let response = createWorkerResponse(WorkerJob.TYPE.CREATE_FILE);
   try {
-    await dockerContainer.createFileWithBuffer(JSON.parse(data.buffer).replaceAll("\\n", "\\\\n"), data.fileName);
+    await dockerContainer.createFileWithBuffer(data.buffer.replaceAll("\\n", "\\\\n"), data.fileName);
     updateFileName(data.fileName);
     response.data = true;
   } catch (error) {
@@ -94,8 +94,8 @@ async function runCode() {
     await getTestCase(1);
     await dockerContainer.compile();
     let listTestInfo = [];
-    for (let inp of inps) {
-      let runInfo = await dockerContainer.run(inp);
+    for (let index in inps) {
+      let runInfo = await dockerContainer.run(inps[index], outs[index]);
       listTestInfo.push(runInfo);
       if (runInfo.status === false) {
         break;

@@ -1,12 +1,14 @@
-const Language = require("../docker/language/LanguageFactory");
 const { WorkerJob, default: job } = require("./job");
-const fs = require('fs');
 
 class JobData {
     timeLimited = null;
     memoryLimited = null;
     languageType = null;
     id = null;
+
+    handleRunFinishCallback = null;
+    source = null;
+
 
     constructor(timeLimited, memoryLimited, languageType) {
         this.languageType = languageType;
@@ -65,6 +67,7 @@ class WorkerQueue {
             timeLimited: jobData.timeLimited,
             workingDirectory: "C:\\Users\\minht\\OneDrive\\Desktop\\ĐỒ ÁN TỐT NGHIỆP\\code\\backend\\codeExecutionService\\" + '/source/' + Math.round(Math.random() * 1000),
         }
+        worker.setData(jobData);
         worker.sendRecreateNewContainer(workerData);
     }
 
@@ -74,13 +77,11 @@ class WorkerQueue {
      */
     getAvailableWorker(jobData) {
         if (this.workers.length < this.maxWorker) {
-            console.log('createNewWorker');
             return this.createWorker(jobData);
         }
 
         for (let/** @type WorkerJob */ worker of this.workers) {
             if (worker.status === WorkerJob.STATUS.TERMINATE) {
-                worker.setData(jobData);
                 this.recreateContainerInWorker(jobData, worker);
                 return worker;
             }
@@ -94,7 +95,6 @@ class WorkerQueue {
                 if (worker.status === WorkerJob.STATUS.AVAILABLE) {
                     worker.setData(jobData);
                     worker.runJob();
-                    console.log('reuseWorker');
                     return worker;
                 }
             }
@@ -110,7 +110,6 @@ class WorkerQueue {
         // Kiểm tra xem có container nào đang bị remove đi vì job hay không
         for (let worker of this.workers) {
             if (worker.status === WorkerJob.STATUS.STOP && worker.data.id === jobData.id) {
-                console.log("findContainerAndReplace")
                 return null;
             }
         }
@@ -124,7 +123,6 @@ class WorkerQueue {
             if (worker.status === WorkerJob.STATUS.AVAILABLE) {
                 worker.setData(jobData);
                 worker.sendStop();
-                console.log("stopContainer");
                 return worker;
             }
         }
@@ -137,9 +135,9 @@ class WorkerQueue {
      * nào đó, thực hiện lấy lại data đã được gán vào container để remove
      * Data này chính là Job sẽ được sử dụng vào Container mới
      */
-    removeContainer() {
+    removeContainer(removedId) {
         for (let i = 0; i < this.workers.length; i++) {
-            if (this.workers[i].status === WorkerJob.STATUS.STOP && this.workers[i].data !== null) {
+            if (this.workers[i].id === removedId) {
                 let data = this.workers[i].data;
                 this.queueJob.push(data);
                 this.workers[i].setStatus(WorkerJob.STATUS.TERMINATE);
@@ -160,19 +158,14 @@ class WorkerQueue {
         let nextJob = this.queueJob[0];
 
         if (!nextJob) {
-            console.log("C1");
             return;
         }
 
         let availableWorker = this.getAvailableWorker(nextJob);
 
         if (!availableWorker) {
-            console.log("C2");
             return;
         }
-
-
-        console.log(this.queueJob.length);
 
         this.queueJob.shift();
     }
@@ -201,7 +194,7 @@ var WorkerQueueSingleton = (function () {
 })();
 
 module.exports = {
-    WorkerQueueSingleton: WorkerQueueSingleton,
-    JobData: JobData,
-    WorkerQueue: WorkerQueue
+    WorkerQueueSingleton : WorkerQueueSingleton,
+    JobData : JobData,
+    WorkerQueue : WorkerQueue
 }

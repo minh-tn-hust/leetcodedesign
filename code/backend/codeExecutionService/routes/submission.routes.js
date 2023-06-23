@@ -1,4 +1,5 @@
 const controller = require('../controlers/submission/submission.controller');
+const {auth, submission} = require('../middlewares/index');
 
 module.exports = function(app) {
     app.use(function(req, res, next) {
@@ -11,6 +12,21 @@ module.exports = function(app) {
 
     app.get(
         "/something",
+        auth.getAuthInfoFromGateway,
         controller.initServer
+    )
+
+    app.post(
+        "/runWithoutSaving",
+        auth.getAuthInfoFromGateway,
+        submission.checkNullField,
+        controller.runWithoutStoreData
+    )
+
+    app.post(
+        "/runWithSaving",
+        auth.getAuthInfoFromGateway,
+        submission.checkNullField,
+        controller.runWithStoreData
     )
 };

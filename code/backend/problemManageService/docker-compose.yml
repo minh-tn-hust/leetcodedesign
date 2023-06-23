@@ -1,16 +1,23 @@
 version: '2'
 
+
 services:
   mysql:
-    image: mysql:latest
+    container_name: problemManage-db
+    image: mysql:8.0.31
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: "@123123abc"
-      MYSQL_DATABASE: "testdb"
+      MYSQL_DATABASE: "problemdb"
     volumes:
-      - ./mysql-data:/var/lib/mysql
-      - ./mysql-conf:/etc/mysql/conf.d
+      - ./mysql_data:/var/lib/mysql
+    networks:
+      - kong-net
+    ports:
+      - "4004:3306"
   nodejs:
+    hostname: problemManageService
+    container_name: problemManage-service
     build:
       context: .
       dockerfile: Dockerfile
@@ -20,3 +27,9 @@ services:
       - "3001:3001"
     depends_on:
       - mysql
+    networks:
+      - kong-net
+
+networks:
+  kong-net:
+    external: true

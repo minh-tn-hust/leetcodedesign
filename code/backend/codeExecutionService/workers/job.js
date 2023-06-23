@@ -26,6 +26,7 @@ class WorkerJob {
 
     /** @type {WorkerQueue} */ queue = null;
     /** @type {JobData} */ data = null;
+    /** @type {number} */ id = null;
 
     /**
      * @param {WorkerJob.STATUS} status 
@@ -53,12 +54,8 @@ class WorkerJob {
             outputFileName = 'TEST_GO.go';
         }
 
-        let readStream = fs.createReadStream(inputFileSource, 'ascii');
-        let buffer = "";
-        readStream.on('data', function (chunk) {
-            buffer += chunk;
-            this.sendCreateFile(JSON.stringify(buffer), outputFileName);
-        }.bind(this));
+        let source = this.data.source;
+        this.sendCreateFile(source, outputFileName);
     }
 
     /**
@@ -68,12 +65,14 @@ class WorkerJob {
      */
     constructor(filename, options, queue) {
         this.createDirectoryIfNotExists(options.workerData.workingDirectory);
-        console.log("Worker Options: " + JSON.stringify(options));
+        this.id = Math.round(Math.random() * 100000);
+        options.workerData.id = this.id;
         this.worker = new Worker(filename, options);
         this.queue = queue;
         this.setStatus(WorkerJob.STATUS.CREATING);
 
         this.initWorker();
+
     }
 
     createDirectoryIfNotExists(directoryPath) {
@@ -185,8 +184,9 @@ class WorkerJob {
 
     handleRunningFinish(response) {
         this.setStatus(WorkerJob.STATUS.AVAILABLE);
+        this.data.handleRunFinishCallback(response);
         this.setData(null);
-        console.log(response);
+        console.log(JSON.stringify(response));
         this.queue.runNextJob();
     }
 
@@ -206,7 +206,7 @@ class WorkerJob {
         if (workerResponse.data === true) {
             try {
                 this.status = WorkerJob.STATUS.STOP;
-                this.queue.removeContainer();
+                this.queue.removeContainer(this.id);
             } catch (error) {
                 console.log("STOP ERRROR : " + error);
             }
